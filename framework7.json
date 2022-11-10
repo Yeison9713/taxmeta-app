@@ -1,0 +1,28 @@
+{
+  "cwd": "C:\\xampp\\htdocs\\ts\\taxmeta-app",
+  "type": [
+    "web",
+    "pwa",
+    "capacitor"
+  ],
+  "name": "taxmeta-app",
+  "framework": "vue",
+  "template": "single-view",
+  "bundler": "vite",
+  "cssPreProcessor": "scss",
+  "theming": {
+    "customColor": true,
+    "color": "#007aff",
+    "darkTheme": false,
+    "iconFonts": true,
+    "fillBars": true
+  },
+  "customBuild": false,
+  "pkg": "io.framework7.myapp",
+  "capacitor": {
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  }
+}

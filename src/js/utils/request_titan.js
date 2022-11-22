@@ -12,7 +12,8 @@ const clear_text = (data) => {
 const default_msj = (data = {}) => {
     let response = { status: -1, message: null }
 
-    response.status = data.Code == '0' ? 0 : -1
+    // response.status = data.Code == '0' ? 0 : -1
+    response.status = (data.Code == '0' || data.status == '0') ? 0 : -1
     response.message = data?.Mensaje ? data.Mensaje : data;
 
     return response

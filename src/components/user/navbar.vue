@@ -1,7 +1,7 @@
 <template>
-  <f7-navbar>
+  <f7-navbar class="header_nav">
     <f7-nav-title>
-      <div class="header_nav">
+      <div>
         <div class="content_nav">
           <div class="logo">
             <div
@@ -68,8 +68,8 @@ export default {
 .content_nav
   width: 100%
 
-.logo
-  width: 45%
+.header_nav .logo
+  width: 110px
   justify-content: center
 
 .data_user

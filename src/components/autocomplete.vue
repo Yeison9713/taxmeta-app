@@ -7,9 +7,10 @@
     floating-label
     error-message="Campo obligatorio"
     :required="required"
-    clear-button
+    :clear-button="clearText"
     outline
     :error-message-force="errorLabel"
+    :disabled="disabled"
     @input="errorLabel = false"
   >
   </f7-list-input>
@@ -63,6 +64,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    clearText: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   setup(props, { emit }) {
@@ -70,7 +79,7 @@ export default {
       let results = [];
 
       for (let item of items) {
-        let index = item[key].toLowerCase().indexOf(query.toLowerCase());
+        let index = item[label].toLowerCase().indexOf(query.toLowerCase());
 
         if (index >= 0) {
           let log = format ? item[key] + " - " + item[label] : item[label];

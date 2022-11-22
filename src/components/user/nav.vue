@@ -5,24 +5,32 @@
         class="sheet-menu-list"
         style="height: auto; --f7-sheet-bg-color: #fff"
         swipe-to-close
+        swipe-to-step
         backdrop
         animate
-        push
       >
-        <f7-list menu-list>
-          <f7-list-item
-            link="/user/lookup/"
-            title="Buscador"
-            :selected="selected === 'search'"
-            @click="selected = 'search'"
-            sheet-close=".sheet-menu-list"
-          >
-          </f7-list-item>
+        <f7-toolbar>
+          <div class="left">
+            <div
+              class="
+                display-flex
+                padding
+                justify-content-space-between
+                align-items-center
+              "
+            >
+              <div><b>Menu </b></div>
+            </div>
+          </div>
+          <div class="right">
+            <f7-link sheet-close>Cerrar</f7-link>
+          </div>
+        </f7-toolbar>
 
+        <f7-list menu-list class="no-hairline menu_user">
           <f7-list-item
-            link
+            link="/user/profile/"
             title="Perfil"
-            :selected="selected === 'profile'"
             @click="() => (selected = 'profile')"
             sheet-close=".sheet-menu-list"
           >
@@ -38,7 +46,6 @@
           <f7-list-item
             link="/user/tickets/"
             title="Tiquetes"
-            :selected="selected === 'tickets'"
             @click="() => (selected = 'tickets')"
             sheet-close=".sheet-menu-list"
           >
@@ -54,7 +61,6 @@
           <f7-list-item
             link
             title="Cerrar sesiòn"
-            :selected="selected === 'logout'"
             @click="(selected = 'logout'), logout()"
             sheet-close=".sheet-menu-list"
           >

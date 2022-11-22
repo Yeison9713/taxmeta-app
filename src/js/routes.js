@@ -2,6 +2,7 @@ import store from "../js/store";
 
 import Login from '../pages/login.vue'
 import User from '../pages/user/index.vue'
+import Profile from '../pages/user/profile.vue'
 import Tickets from '../pages/user/tickets/index.vue'
 import Lookup from '../components/lookup.vue'
 
@@ -14,6 +15,7 @@ var routes = [
   },
   securedRoute('/login/', Login),
   securedRoute('/user/', User),
+  securedRoute('/user/profile/', Profile),
   securedRoute('/user/tickets/', Tickets),
   securedRoute('/user/lookup/', Lookup),
   {

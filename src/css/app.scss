@@ -1,13 +1,18 @@
 /* Custom color theme properties */
 :root {
-  --f7-theme-color: #029040;
-  --f7-theme-color-rgb: 2, 144, 64;
-  --f7-theme-color-shade: #01682e;
-  --f7-theme-color-tint: #03b852;
+  // --f7-theme-color: #029040;
+  // --f7-theme-color-rgb: 2, 144, 64;
+  // --f7-theme-color-shade: #01682e;
+  // --f7-theme-color-tint: #03b852;
   --f7-navbar-height: 60px;
 
-  --f7-font-family: 'Jost', sans-serif;
+  --f7-theme-color: #0c57b2;
+  --f7-theme-color-rgb: 12, 87, 178;
+  --f7-theme-color-shade: #09448c;
+  --f7-theme-color-tint: #0f6ad8;
 
+  --f7-font-family: 'Jost', sans-serif;
+  --f7-bg-ts: rgb(204 204 204 / 15%) !important
 }
 
 /* Invert navigation bars to fill style */
@@ -60,13 +65,28 @@
 
 /* Your app custom styles here */
 
-.navbar .navbar-bg,
-.navbar .subnavbar {
+.header_nav.navbar .navbar-bg {
   background: #fff !important;
 }
 
-.navbar,
-.subnavbar,
-.navbar .icon {
+.header_nav.navbar,
+.header_nav.navbar .icon {
   color: rgb(49, 47, 47);
+}
+
+.bg-ts .page-content {
+  background: var(--f7-bg-ts)
+}
+
+.color-blue {
+  --f7-theme-color: #0c57b2 !important;
+  --f7-theme-color-rgb: 12, 87, 178 !important;
+  --f7-theme-color-shade: #09448c !important;
+  --f7-theme-color-tint: #0f6ad8 !important;
+}
+
+.tab-link-highlight {
+  // background: #00b750d1 !important;
+  background: var(--f7-theme-color-tint) !important;
+
 }

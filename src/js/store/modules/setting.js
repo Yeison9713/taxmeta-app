@@ -19,6 +19,10 @@ export default {
             tickets: "Transporte/dlls/PrTiquetesV02J.dll",
             save_ticket: "Transporte/dlls/PrTiquetesV.dll",
             ticket: "Transporte/dlls/prtiquetesvj.dll",
+            travel_book: "Transporte/dlls/PrTiquetes03VJ.dll",
+            close_book: "Transporte/dlls/PrLViajesV.dll",
+            book: "Transporte/dlls/PrLviajes03VJ.dll",
+            contab_book: "Taxmeta/app//TAX132T1.dll"
         },
     },
 

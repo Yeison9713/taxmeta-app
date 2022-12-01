@@ -105,6 +105,20 @@ const textValue = (obj = [], id, field = "value", resolve = "text") => {
     return ""
 }
 
+const formatComas = (index, longitud, string) => {
+    return index + 1 === longitud ? string : string + ", ";
+}
+
+const format_horarios = (val) => {
+    return val.horasal_hor;
+}
+
+const format_hora = (hora) => {
+    let arrHor = hora.split("");
+    arrHor.splice(2, 0, ":");
+    return arrHor.join("");
+}
+
 export {
     toast,
     loader,
@@ -114,5 +128,8 @@ export {
     getBase64,
     current_date,
     capitalize,
-    textValue
+    textValue,
+    formatComas,
+    format_horarios,
+    format_hora
 }

@@ -76,7 +76,6 @@ export default {
     const list_id = computed(() => "lookup-list-" + params?.text);
 
     const open = async () => {
-      console.log("open");
       for (const iterator of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) {
         lookup.push({
           text: `texto - ${iterator}`,
@@ -86,9 +85,7 @@ export default {
       }
     };
 
-    const close = () => {
-      console.log("close");
-    };
+    const close = () => {};
 
     const filter_data = (query, items) => {
       const found = [];
@@ -121,9 +118,7 @@ export default {
       vlData = data;
     };
 
-    const select_item = (item) => {
-      console.log(item);
-    };
+    const select_item = (item) => {};
 
     return {
       estado,
@@ -146,7 +141,7 @@ export default {
 <style>
 .lookup .navbar .navbar-bg,
 .lookup .navbar .subnavbar {
-  background: #029040 !important;
+  /* background: #029040 !important; */
   color: #fff;
 }
 

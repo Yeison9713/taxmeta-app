@@ -2,10 +2,11 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from '../print/vfs.js';
 pdfMake.vfs = pdfFonts;
 
-import { ticket } from "./tickets.js";
+import { ticket, travel_book } from "./tickets.js";
 
 const print = {
-    ticket
+    ticket,
+    travel_book
 }
 
 const imprimir = ({ data = {}, formato = '', nit = 0 }) => {

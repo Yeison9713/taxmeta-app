@@ -33,6 +33,7 @@
     "cordova-plugin-print-pdf": "^4.0.2",
     "dexie": "^3.2.2",
     "dom7": "^4.0.4",
+    "firebase": "^9.14.0",
     "framework7": "^7.0.7",
     "framework7-icons": "^5.0.5",
     "framework7-vue": "^7.0.7",

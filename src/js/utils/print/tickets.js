@@ -1,6 +1,6 @@
 import { format_num, getBase64 } from "../plugins";
 
-export const ticket = async (data) => {
+const ticket = async (data) => {
     data.pasajeros.pop()
 
     let logo = await getBase64("taxsuper")
@@ -300,3 +300,398 @@ export const ticket = async (data) => {
         },
     };
 }
+
+const travel_book = async (data) => {
+    let logo = await getBase64("taxsuper")
+
+    let data_anulado = {
+        text: "Anulado",
+        angle: 60,
+        color: "black",
+        opacity: 0.2,
+        fontSize: 70,
+    };
+
+    let watermark = data.estado_lvia === "0" ? "" : data_anulado
+
+    let stylePDF = {
+        pageSize: {
+            width: 200,
+            height: "auto",
+        },
+        pageMargins: [20, 10, 10, 10],
+    };
+
+    let pasajeros = [];
+    let pasajerosV2 = []
+    let totalvlr_lvia = parseFloat(data.vlrbruto_lvia)
+    let avances_lvia = parseFloat(data.vlravances_lvia) || 0;
+    let recaudo_lvia = parseFloat(data.vlrrecaudo_lvia) || 0;
+    let ssocial_lvia = parseFloat(data.vlrssocial_lvia) || 0;
+    let totalPagar_lvia = totalvlr_lvia - avances_lvia - recaudo_lvia - ssocial_lvia;
+
+    let get_row = (label, value) => {
+        return {
+            columns: [
+                { text: label + ': ' },
+                { text: value }
+            ]
+        }
+    }
+
+    data.tiquetes_lvia.pop();
+    let tiquetes = data.tiquetes_lvia.filter(el => el.tiquete_lvia && el.tiquete_lvia.trim())
+
+    tiquetes.forEach((pas) => {
+        pasajerosV2.push([
+            {
+                colSpan: 7,
+                stack: [
+                    { ...get_row('Tiquete', parseInt(pas.tiquete_lvia.trim())) },
+                    { ...get_row('Pasajero', pas.pasajero_lvia.trim()) },
+                    { ...get_row('Destino', pas.destino_lvia.trim()) },
+                    { ...get_row('Sillas', pas.sillas_lvia.trim()) },
+                    { ...get_row('F.Pago', pas.fpago_lvia.trim()) },
+                    { ...get_row('Cant', pas.cantidad_lvia.trim()) },
+                    { ...get_row('Valor', "$" + format_num(pas.vlrtiq_lvia)) },
+                ]
+            }, {}, {}, {}, {}, {}, {}
+        ])
+    });
+
+    let layout = {
+        vLineColor: "#A4A4A4",
+        hLineColor: "#A4A4A4",
+        hLineWidth: function (i, node) {
+            return 0.3;
+        },
+        vLineWidth: function (i, node) {
+            return 0.3;
+        },
+    };
+
+    return {
+        watermark,
+        ...stylePDF,
+        content: [
+            {
+                fontSize: 6.5,
+                headerRows: 1,
+                table: {
+                    widths: ["auto", "auto", "auto", "auto", "auto", "auto", "auto"],
+                    body: [
+                        [
+                            {
+                                colSpan: 7,
+                                image: logo.message.message,
+                                fit: [130, 130],
+                                alignment: "center",
+                                margin: [0, 2],
+                            },
+                            "", "", "", "", "", "",
+                        ],
+                        [
+                            {
+                                fontSize: 10,
+                                colSpan: 7,
+                                text: [
+                                    { text: "Libro de Viaje:  ", bold: true },
+                                    parseInt(data.nro_lvia.trim()),
+                                ],
+                                style: "center",
+                                margin: [0, 2],
+                            },
+                            "", "", "", "", "", "",
+                        ],
+                        [
+                            {
+                                fontSize: 10,
+                                colSpan: 7,
+                                text: [
+                                    { text: "Origen:  ", bold: true },
+                                    data.origen_lvia.trim(),
+                                ],
+                            },
+                            "", "", "", "", "", "",
+                        ],
+                        [
+                            {
+                                fontSize: 10,
+                                colSpan: 7,
+                                text: [
+                                    { text: "Destino:  ", bold: true },
+                                    data.destino_lvia.trim(),
+                                ],
+                            },
+                            "", "", "", "", "", "",
+                        ],
+                        [
+                            {
+                                fontSize: 10,
+                                colSpan: 4,
+                                text: [
+                                    { text: "Fecha viaje:  ", style: "center" },
+                                    data.fecha_lvia,
+                                ],
+                            },
+                            "", "", "",
+                            {
+                                fontSize: 10,
+                                colSpan: 3,
+                                text: [
+                                    { text: "Hora:  ", style: "center" },
+                                    data.hora_lvia
+                                ],
+                            },
+                            "", "",
+                        ],
+                        [
+                            {
+                                fontSize: 10,
+                                colSpan: 3,
+                                text: [
+                                    { text: "Número de cargue:  ", style: "center" },
+                                    parseFloat(data.nrocargue_lvia),
+                                ],
+                            },
+                            "", "",
+                            {
+                                fontSize: 10,
+                                colSpan: 4,
+                                text: [
+                                    { text: "Vehículo:  ", style: "center" },
+                                    data.placa_lvia,
+                                ],
+                            },
+                            "", "", "",
+                        ],
+                        [
+                            {
+                                fontSize: 10,
+                                colSpan: 7,
+                                text: [
+                                    { text: "Conductor:  ", bold: true },
+                                    `${data.idconductor_lvia
+                                    } - ${data.conductor_lvia.trim()}`,
+                                ],
+                            },
+                            "", "", "", "", "", "",
+                        ],
+                        ...pasajerosV2,
+                        [
+                            {
+                                colSpan: 2,
+                                text: "Total seguro:",
+                                style: "right",
+                                fontSize: 10,
+                            },
+                            "",
+                            {
+                                colSpan: 2,
+                                text: "$" + format_num(data.vlrseguro_lvia),
+                                alignment: "right",
+                                fontSize: 8,
+                            },
+                            "",
+                            { text: "Total", style: "right", fontSize: 10 },
+                            {
+                                text: format_num(data.cantpasajeros_lvia),
+                                alignment: "right",
+                                fontSize: 8,
+                            },
+                            {
+                                text: "$" + format_num(totalvlr_lvia),
+                                alignment: "right",
+                                fontSize: 8,
+                            },
+                        ],
+                        [
+                            { colSpan: 5, text: "Efectivo", style: "right", fontSize: 8 },
+                            "",
+                            "",
+                            "",
+                            "",
+                            {
+                                colSpan: 2,
+                                text: "$" + format_num(data.vlrefectivo_lvia.trim() || 0),
+                                fontSize: 8,
+                                alignment: "center",
+                            },
+                            "",
+                        ],
+                        [
+                            { colSpan: 5, text: "Redbus", style: "right", fontSize: 8 },
+                            "",
+                            "",
+                            "",
+                            "",
+                            {
+                                colSpan: 2,
+                                text: "$" + format_num(data.vlrredbus_lvia.trim() || 0),
+                                fontSize: 8,
+                                alignment: "center",
+                            },
+                            "",
+                        ],
+                        [
+                            { colSpan: 5, text: "Pinbus", style: "right", fontSize: 8 },
+                            "",
+                            "",
+                            "",
+                            "",
+                            {
+                                colSpan: 2,
+                                text: "$" + format_num(data.vlrpinbus_lvia.trim() || 0),
+                                fontSize: 8,
+                                alignment: "center",
+                            },
+                            "",
+                        ],
+                        [
+                            { colSpan: 5, text: "Brasilia", style: "right", fontSize: 8 },
+                            "",
+                            "",
+                            "",
+                            "",
+                            {
+                                colSpan: 2,
+                                text: "$" + format_num(data.vlrbrasilia_lvia.trim() || 0),
+                                fontSize: 8,
+                                alignment: "center",
+                            },
+                            "",
+                        ],
+                        [
+                            { colSpan: 5, text: "Avance", style: "right", fontSize: 8 },
+                            "",
+                            "",
+                            "",
+                            "",
+                            {
+                                colSpan: 2,
+                                text: format_num(avances_lvia),
+                                fontSize: 8,
+                                alignment: "center",
+                            },
+                            "",
+                        ],
+                        [
+                            { colSpan: 5, text: "Recaudo", style: "right", fontSize: 8 },
+                            "",
+                            "",
+                            "",
+                            "",
+                            {
+                                colSpan: 2,
+                                text: format_num(recaudo_lvia),
+                                fontSize: 8,
+                                alignment: "center",
+                            },
+                            "",
+                        ],
+                        [
+                            {
+                                colSpan: 5,
+                                text: "Seguridad social",
+                                style: "right",
+                                fontSize: 8,
+                            },
+                            "",
+                            "",
+                            "",
+                            "",
+                            {
+                                colSpan: 2,
+                                text: format_num(ssocial_lvia),
+                                fontSize: 8,
+                                alignment: "center",
+                            },
+                            "",
+                        ],
+                        [
+                            {
+                                colSpan: 5,
+                                text: "TOTAL LIBRO DE VIAJE",
+                                style: "right",
+                                fontSize: 10,
+                            },
+                            "",
+                            "",
+                            "",
+                            "",
+                            {
+                                colSpan: 2,
+                                text: "$" + format_num(totalPagar_lvia),
+                                fontSize: 8,
+                                alignment: "center",
+                            },
+                            "",
+                        ],
+                        [
+                            {
+                                colSpan: 7,
+                                text: [
+                                    { text: "Observaciones:\n  ", bold: true },
+                                    data.observaciones_lvia.trim(),
+                                ],
+                                fontSize: 8,
+                            },
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                        ],
+                        [
+                            {
+                                colSpan: 7,
+                                text: [
+                                    "Taquilla de despacho: ",
+                                    { text: data.descagencia_lvia, bold: true },
+                                ],
+                                fontSize: 8,
+                            },
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                        ],
+                        [
+                            {
+                                colSpan: 7,
+                                text: [
+                                    "Despachador: ",
+                                    { text: data.despachador_lvia.trim(), bold: true },
+                                ],
+                                fontSize: 8,
+                            },
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                        ],
+                    ],
+                },
+                layout,
+            },
+        ],
+        styles: {
+            center: {
+                bold: true,
+                alignment: "center",
+            },
+            right: {
+                bold: true,
+                alignment: "right",
+            },
+        }
+    };
+}
+
+
+export { ticket, travel_book }

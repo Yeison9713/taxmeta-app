@@ -36,6 +36,7 @@
                   :returnObject="true"
                   :clearText="true"
                   :items="travels"
+                  :value="form.travel"
                   @output="(e) => (form.travel = e)"
                 >
                 </Autocomplete>
@@ -170,12 +171,14 @@
 
               <f7-list-item group-title> Detalle pasajero </f7-list-item>
 
-              <f7-list-item title="Sillas" smart-select>
-                <select name="sillas" multiple v-model="chairs">
-                  <option v-for="item in 50" :key="item" :value="item">
-                    Silla {{ item }}
-                  </option>
-                </select>
+              <f7-list-item class="width-100">
+                <f7-button
+                  class="width-100 no-padding"
+                  color="green"
+                  fill
+                  @click="popup_sillas.state = true"
+                  >Selecionar sillas
+                </f7-button>
               </f7-list-item>
 
               <f7-list-input
@@ -360,6 +363,7 @@
           link="#"
           popover-close
           title="Cerrar libro"
+          @click="params_popup_book.estado = true"
         ></f7-list-item>
         <f7-list-item
           link="#"
@@ -373,8 +377,21 @@
     <popupTickets
       :estado="params_popup_tickets.estado"
       :params="params_popup_tickets.params"
-      @closed="params_popup_tickets.estado = true"
+      @closed="params_popup_tickets.estado = false"
     ></popupTickets>
+
+    <Travelbook
+      :estado="params_popup_book.estado"
+      :travel="form?.travel || {}"
+      :id_agc="info?.key_point?.ticket_office?.id_agc || ''"
+      @closed="params_popup_book.estado = false"
+    ></Travelbook>
+
+    <Sillas
+      :estado="popup_sillas.state"
+      @closed="get_select_chairs"
+      :params="popup_sillas.params"
+    ></Sillas>
   </f7-page>
 </template>
 
@@ -398,20 +415,37 @@ import {
   f_pagos,
   dispatch_data,
   init_store,
+  template_bus,
 } from "../../../components/tickets/index";
+import Sillas from "../../../components/tickets/chairs.vue";
+import Travelbook from "../../../components/tickets/travel_book.vue";
 
 export default {
   components: {
     Autocomplete,
     popupTickets,
+    Sillas,
+    Travelbook,
   },
   setup() {
     const store = useStore();
-    const chairs = ref(null);
+
+    const popup_sillas = ref({
+      state: false,
+      params: {
+        template: null,
+        id_via: null,
+      },
+      selects: [],
+    });
 
     const params_popup_tickets = reactive({
       estado: false,
       params: { id_via: null },
+    });
+
+    const params_popup_book = reactive({
+      estado: false,
     });
 
     init_store();
@@ -451,7 +485,7 @@ export default {
 
     watch(
       () => form.travel,
-      (val) => {
+      async (val) => {
         let data = { ...val };
 
         form.origin = parseFloat(data.codorigen_via) || "";
@@ -462,7 +496,11 @@ export default {
         form.driver = parseFloat(data.conductor1_via) || 0;
         form.descrip_driver = `${form.driver} - ${data.desconductor_tiq}`;
 
-        form.service = `${data.cantpasajeros_via || ""} - pasajeros`;
+        let template = template_bus(data.tipoveh2_via);
+
+        form.service = template?.service || "";
+        popup_sillas.value.params.template = template?.template;
+        popup_sillas.value.params.id_via = data.id_via;
 
         if (!data.cantpasajeros_via) {
           let glass = init_form();
@@ -474,15 +512,15 @@ export default {
       }
     );
 
-    watch(
-      () => chairs,
-      (val) => {
-        let quantity = Object.keys(val.value);
-        form.passenger.quantity = quantity.length;
-        calcular_subtotal();
-      },
-      { deep: true }
-    );
+    const get_select_chairs = (data) => {
+      popup_sillas.value.state = false;
+
+      let selects = data.filter((e) => e.type == "selected");
+      popup_sillas.value.selects = selects;
+      form.passenger.quantity = selects.length;
+
+      calcular_subtotal();
+    };
 
     let timeout = null;
 
@@ -519,7 +557,8 @@ export default {
     const validate_form = () => {
       if (!form.travel) toast("Debe selecionar un viaje");
       else if (!form.destination) toast("Debe selecionar un destino");
-      else if (!form.driver) toast("Debe selecionar un conductor");
+      // else if (!form.driver) toast("Debe selecionar un conductor");
+      else if (!form.descrip_driver) toast("Debe selecionar un conductor");
       else if (!form.passenger.quantity) toast("Debe selecionar la silla");
       else if (!form.passenger.id)
         toast("Debe ingresar la identificacion del pasajero");
@@ -535,7 +574,7 @@ export default {
     const save = async () => {
       try {
         loader(true);
-        form.pasajeros = chairs.value;
+        form.pasajeros = popup_sillas.value.selects;
 
         let { message } = await store.dispatch(
           "travels/save_ticket",
@@ -582,8 +621,8 @@ export default {
       embargoes,
       schedules,
       f_pagos,
-      chairs,
       params_popup_tickets,
+      params_popup_book,
       capitalize,
       enabled_popup_tickets,
       textValue,
@@ -593,6 +632,8 @@ export default {
       save,
       init_form,
       print_ticket,
+      popup_sillas,
+      get_select_chairs,
     };
   },
 };

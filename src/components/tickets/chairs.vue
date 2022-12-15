@@ -24,7 +24,8 @@
             :checked="item.select"
             @change="
               (e) => (
-                (item.select = e.target.checked), (item.type = 'selected')
+                (item.select = e.target.checked),
+                (item.type = item.select ? 'selected' : '')
               )
             "
           ></f7-list-item>

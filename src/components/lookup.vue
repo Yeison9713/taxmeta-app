@@ -7,7 +7,7 @@
   >
     <f7-view>
       <f7-page>
-        <f7-navbar :title="`Busqueda de ${params?.text?.toLocaleLowerCase()}`">
+        <f7-navbar :title="`Busqueda de ${$props.params.text}`">
           <f7-nav-right>
             <f7-link icon-f7="multiply" popup-close></f7-link>
           </f7-nav-right>
@@ -63,29 +63,49 @@
 </template>
 
 <script>
+import _ from "lodash";
 import { f7 } from "framework7-vue";
-import { reactive, computed } from "vue";
+import { computed, ref } from "vue";
 
 export default {
-  setup({ params = {}, estado = true }) {
-    let lookup = reactive([]);
-    let vlData = reactive({
-      items: [],
-    });
+  props: {
+    estado: Boolean,
+    params: {
+      type: Object,
+      default: {
+        text: "No se ha definido",
+        data: [],
+        columns: {},
+      },
+    },
+  },
+  setup(props, context) {
+    const { params } = props;
+
+    let lookup = ref([]);
+    let vlData = ref({ items: [] });
 
     const list_id = computed(() => "lookup-list-" + params?.text);
 
     const open = async () => {
-      for (const iterator of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) {
-        lookup.push({
-          text: `texto - ${iterator}`,
-          value: iterator,
-          index: iterator,
+      let index = 0;
+      let { columns, data } = props.params;
+      lookup.value = [];
+
+      for await (const item of data) {
+        lookup.value.push({
+          text: `${item[columns.text]}`,
+          value: item[columns.value],
+          index,
         });
+
+        ++index;
       }
+
+      replaceData(lookup.value);
     };
 
-    const close = () => {};
+    const closed = () => context.emit("closed", false);
 
     const filter_data = (query, items) => {
       const found = [];
@@ -106,8 +126,10 @@ export default {
       return found;
     };
 
-    const replaceData = () => {
-      let virtualList = f7.virtualList.get(document.getElementById(list_id));
+    const replaceData = (data = []) => {
+      let virtualList = f7.virtualList.get(
+        document.getElementById(list_id.value)
+      );
 
       if (virtualList) {
         virtualList.replaceAllItems(data);
@@ -115,19 +137,21 @@ export default {
     };
 
     const renderExternal = (vl, data) => {
-      vlData = data;
+      vlData.value = data;
     };
 
-    const select_item = (item) => {};
+    const select_item = (item) => {
+      let data = props.params.data[item.index] || {};
+      context.emit("callback", _.cloneDeep(data));
+    };
 
     return {
-      estado,
       params,
       lookup,
       vlData,
       list_id,
       open,
-      close,
+      closed,
       filter_data,
       replaceData,
       renderExternal,

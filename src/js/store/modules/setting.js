@@ -22,7 +22,9 @@ export default {
             travel_book: "Transporte/dlls/PrTiquetes03VJ.dll",
             close_book: "Transporte/dlls/PrLViajesV.dll",
             book: "Transporte/dlls/PrLviajes03VJ.dll",
-            contab_book: "Taxmeta/app//TAX132T1.dll"
+            contab_book: "Taxmeta/app//TAX132T1.dll",
+            loads: "Transporte/dlls/PrCargues2VJ.dll",
+            save_load: "Transporte/dlls/PrCarguesV.dll",
         },
     },
 

@@ -8,6 +8,7 @@ import vehicles from './modules/vehicles';
 import customers from './modules/customers'
 import embargoes from './modules/embargoes';
 import schedules from './modules/schedules';
+import loads from './modules/loads';
 
 export default createStore({
     modules: {
@@ -19,6 +20,7 @@ export default createStore({
         vehicles,
         customers,
         embargoes,
-        schedules
+        schedules,
+        loads
     }
 })

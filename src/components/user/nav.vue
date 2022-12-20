@@ -59,6 +59,21 @@
           </f7-list-item>
 
           <f7-list-item
+            link="/user/vehicle-load/"
+            title="Cargues"
+            @click="() => (selected = 'tickets')"
+            sheet-close=".sheet-menu-list"
+          >
+            <template #media>
+              <f7-icon
+                md="material:bookmark"
+                aurora="f7:house_fill"
+                ios="f7:house_fill"
+              />
+            </template>
+          </f7-list-item>
+
+          <f7-list-item
             link
             title="Cerrar sesiòn"
             @click="(selected = 'logout'), logout()"

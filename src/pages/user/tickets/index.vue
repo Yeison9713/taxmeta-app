@@ -471,7 +471,7 @@ export default {
       (val) => {
         val.value.map((e) => {
           let id_via = parseFloat(e.id_via) || 0;
-          let hour = e.idhorario_via;
+          let hour = e.horario_via;
           let format_hour = `${hour.substr(0, 2)}:${hour.substr(2, 2)}`;
           let nro = parseFloat(e.nrointer_via);
           let date = e.fecha_via;
@@ -582,6 +582,8 @@ export default {
         );
 
         await print_ticket(message[0]);
+        await time_out(500);
+        await print_ticket(message[0]);
 
         let glass = init_form();
         Object.keys(glass).forEach((k, v) => {
@@ -611,6 +613,10 @@ export default {
       await imprimir({ data: message[0], formato: "ticket" });
 
       return true;
+    };
+
+    const time_out = (ms) => {
+      return new Promise((resolve) => setTimeout(resolve, ms));
     };
 
     return {

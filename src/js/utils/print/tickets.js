@@ -693,5 +693,387 @@ const travel_book = async (data) => {
     };
 }
 
+const close_box = (data) => {
+    return {
+        content: [
+            {
+                headerRows: 1,
+                fontSize: 11,
+                table: {
+                    widths: ["*", "*", "*"],
+                    heights: 15,
+                    body: [
+                        [
+                            {
+                                colSpan: 3,
+                                text: "CIERRE DE CAJA",
+                                style: "center",
+                                margin: [0, 6],
+                            },
+                            "",
+                            "",
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: `Fecha: `,
+                                bold: true,
+                            },
+                            "",
+                            {
+                                text: `Turno: `,
+                                bold: true,
+                            },
+                        ],
+                        [
+                            {
+                                colSpan: 3,
+                                text: `Despachador: `,
+                                bold: true,
+                            },
+                            "",
+                            "",
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: ["Tiquete inicial: ", { text: data.tiqini_rep, bold: true }],
+                                alignment: "center",
+                            },
+                            "",
+                            {
+                                text: ["RPC inicial: ", { text: "0", bold: true }],
+                                alignment: "center",
+                            },
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: ["Tiquete final: ", { text: data.tiqfin_rep, bold: true }],
+                                alignment: "center",
+                            },
+                            "",
+                            {
+                                text: ["RPC final: ", { text: "0", bold: true }],
+                                alignment: "center",
+                            },
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: ["Total tiquetes: ", { text: "0", bold: true }],
+                                alignment: "center",
+                            },
+                            "",
+                            "",
+                        ],
+                        [
+                            {
+                                colSpan: 3,
+                                text: "INGRESOS INTERMUNICIPALES",
+                                style: "center",
+                                margin: [0, 4],
+                            },
+                            "",
+                            "",
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: "CONCEPTO",
+                                style: "center",
+                            },
+                            "",
+                            {
+                                text: "VALOR",
+                                style: "center",
+                            },
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: "Ventas",
+                            },
+                            "",
+                            {
+                                text: `$${format_num(data.ventas_rep)}`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: "RPC",
+                            },
+                            "",
+                            {
+                                text: `$${format_num(data.rpc_rep)}`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: "Egresos",
+                            },
+                            "",
+                            {
+                                text: `$${format_num(data.egresos_rep)}`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: "Redbus",
+                            },
+                            "",
+                            {
+                                text: `$${format_num(data.redbus_rep)}`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: "Tarjeta débito",
+                            },
+                            "",
+                            {
+                                text: `$0`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: "Tarjeta crédito",
+                            },
+                            "",
+                            {
+                                text: `$0`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: "Convenios",
+                            },
+                            "",
+                            {
+                                text: `$0`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: "Brasilia",
+                            },
+                            "",
+                            {
+                                text: `$${format_num(data.brasilia_rep)}`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: "Pinbus",
+                            },
+                            "",
+                            {
+                                text: `$${format_num(data.pinbus_rep)}`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: "TOTALES:",
+                                style: "right",
+                            },
+                            "",
+                            `$${format_num(data.totales_rep)}`,
+                        ],
+                        [
+                            {
+                                colSpan: 3,
+                                text: "EFECTIVO ENTREGADO",
+                                style: "center",
+                                margin: [0, 4],
+                            },
+                            "",
+                            "",
+                        ],
+                        [
+                            {
+                                text: "Denominación",
+                                bold: true,
+                            },
+                            {
+                                text: "Cantidad",
+                                bold: true,
+                            },
+                            {
+                                text: "Total",
+                                bold: true,
+                            },
+                        ],
+                        [
+                            {
+                                text: "$100,000",
+                                alignment: "right",
+                            },
+                            {
+                                text: data.cienk.cantidad || 0,
+                                alignment: "center",
+                            },
+                            {
+                                text: `$${format_num(data.cienk.total)}`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                text: "$50,000",
+                                alignment: "right",
+                            },
+                            {
+                                text: data.ciencuentak.cantidad || 0,
+                                alignment: "center",
+                            },
+                            {
+                                text: `$${format_num(data.ciencuentak.total)}`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                text: "$20,000",
+                                alignment: "right",
+                            },
+                            {
+                                text: data.veintek.cantidad || 0,
+                                alignment: "center",
+                            },
+                            {
+                                text: `$${format_num(data.veintek.total)}`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                text: "$10,000",
+                                alignment: "right",
+                            },
+                            {
+                                text: data.diezk.cantidad || 0,
+                                alignment: "center",
+                            },
+                            {
+                                text: `$${format_num(data.diezk.total)}`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                text: "$5,000",
+                                alignment: "right",
+                            },
+                            {
+                                text: data.cincok.cantidad || 0,
+                                alignment: "center",
+                            },
+                            {
+                                text: `$${format_num(data.cincok.total)}`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                text: "$2,000",
+                                alignment: "right",
+                            },
+                            {
+                                text: data.dosk.cantidad || 0,
+                                alignment: "center",
+                            },
+                            {
+                                text: `$${format_num(data.dosk.total)}`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                text: "$1,000",
+                                alignment: "right",
+                            },
+                            {
+                                text: data.unk.cantidad || 0,
+                                alignment: "center",
+                            },
+                            {
+                                text: `$${format_num(data.unk.total)}`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                text: "Moneda",
+                                alignment: "right",
+                            },
+                            {
+                                text: data.moneda || 0,
+                                alignment: "center",
+                            },
+                            {
+                                text: `$${format_num(data.moneda)}`,
+                                alignment: "right",
+                            },
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: "TOTAL EFECTIVO:",
+                                style: "right",
+                            },
+                            "",
+                            { text: `$${format_num(data.total)}`, alignment: "right" },
+                        ],
+                        [
+                            {
+                                colSpan: 2,
+                                text: "DIFERENCIA:",
+                                style: "right",
+                            },
+                            "",
+                            { text: `$${format_num(data.diferencia)}`, alignment: "right" },
+                        ],
+                    ],
+                },
+                layout: {
+                    vLineColor: "#A4A4A4",
+                    hLineColor: "#A4A4A4",
+                },
+            },
+            {
+                margin: [0, 20],
+                text: [{ text: `Observaciones:\n`, bold: true }, data.observaciones || ''],
+            },
+        ],
+        styles: {
+            center: {
+                bold: true,
+                alignment: "center",
+            },
+            right: {
+                bold: true,
+                alignment: "right",
+            },
+        },
+    }
+}
 
-export { ticket, travel_book }
+export { ticket, travel_book, close_box }

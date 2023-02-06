@@ -9,6 +9,7 @@ import customers from './modules/customers'
 import embargoes from './modules/embargoes';
 import schedules from './modules/schedules';
 import loads from './modules/loads';
+import closebox from './modules/closeBox';
 
 export default createStore({
     modules: {
@@ -21,6 +22,7 @@ export default createStore({
         customers,
         embargoes,
         schedules,
-        loads
+        loads,
+        closebox
     }
 })

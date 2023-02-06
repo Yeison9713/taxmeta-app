@@ -74,6 +74,21 @@
           </f7-list-item>
 
           <f7-list-item
+            link="/user/close-box/"
+            title="Cierre de caja"
+            @click="() => (selected = 'tickets')"
+            sheet-close=".sheet-menu-list"
+          >
+            <template #media>
+              <f7-icon
+                md="material:request_quote"
+                aurora="f7:house_fill"
+                ios="f7:house_fill"
+              />
+            </template>
+          </f7-list-item>
+
+          <f7-list-item
             link
             title="Cerrar sesiòn"
             @click="(selected = 'logout'), logout()"

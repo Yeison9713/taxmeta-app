@@ -25,6 +25,15 @@ export default {
             contab_book: "Taxmeta/app//TAX132T1.dll",
             loads: "Transporte/dlls/PrCargues2VJ.dll",
             save_load: "Transporte/dlls/PrCarguesV.dll",
+
+            square: "transporte/dlls/PrCuadreVJ.dll",
+            balance_aux: "transporte/dlls/PrSaldoAux.dll",
+            travels3: "transporte/dlls/Prcargues3VJ.dll",
+            tickets04: "transporte/dlls/Prtiquetes04VJ.dll",
+            travelsVJ: "transporte/dlls/RpresLViajesVJ.dll",
+            vouchers: "transporte/dlls/RpReimpcb01VJ.dll",
+            save_close_box: "transporte/dlls/PrCuadrev.dll",
+            print_close_box: "transporte/dlls/PrCuadre2VJ.dll",
         },
     },
 

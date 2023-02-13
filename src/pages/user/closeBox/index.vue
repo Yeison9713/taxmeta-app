@@ -87,7 +87,12 @@
 import _ from "lodash";
 
 import { reactive, ref } from "@vue/reactivity";
-import { current_date, capitalize, loader, toast } from "../../../js/utils/plugins";
+import {
+  current_date,
+  capitalize,
+  loader,
+  toast,
+} from "../../../js/utils/plugins";
 import { useStore } from "vuex";
 
 import popup_close_box from "../../../components/closeBox/popup.vue";
@@ -243,7 +248,7 @@ export default {
         let seguro = parseFloat(modal.form.content?.seguro_rep || 0);
         let rpc = parseFloat(modal.form.content?.rpc_rep || 0);
         let egresos = parseFloat(modal.form.content?.egresos || 0);
-        let avances = parseFloat(modal.form.content?.avances || 0);
+        let avances = parseFloat(modal.form.content?.avances_rep || 0);
         let saldoini = parseFloat(modal.form.balance_init || 0);
 
         ventas = ventas + seguro;
@@ -254,6 +259,9 @@ export default {
           parseFloat(egresos) -
           parseFloat(avances) +
           parseFloat(saldoini);
+
+          console.log(totales)
+          console.log(avances)
 
         modal.form.content.totales = parseFloat(totales);
       } catch (error) {

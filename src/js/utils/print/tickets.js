@@ -693,374 +693,604 @@ const travel_book = async (data) => {
     };
 }
 
-const close_box = (data) => {
+const close_box = async (data) => {
+    let logo = await getBase64(data.id_logo)
+
+    let stylePDF = {
+        pageSize: {
+            width: 200,
+            height: "auto",
+        },
+        pageMargins: [20, 10, 10, 10],
+    };
+
+    let ventas = parseFloat(data.ventas_cua.replace(/\,/g, "")) || 0;
+    let seguro = parseFloat(data.seguro_cua.replace(/\,/g, "")) || 0;
+    let rpc = parseFloat(data.rpc_cua.replace(/\,/g, "")) || 0;
+    let egresos = parseFloat(data.egresos_cua.replace(/\,/g, "")) || 0;
+    let avances = parseFloat(data.avances_cua.replace(/\,/g, "")) || 0;
+    let saldo = parseFloat(data.saldoini_cua.replace(/\,/g, "")) || 0;
+
+    let totalcuadre = ventas + rpc - egresos + seguro - avances + saldo
+
+    let cant100 = parseFloat(data.cant100_cua.replace(/\,/g, "")) || 0;
+    let vlr100 = cant100 * 100000;
+    let cant50 = parseFloat(data.cant50_cua.replace(/\,/g, "")) || 0;
+    let vlr50 = cant50 * 50000;
+    let cant20 = parseFloat(data.cant20_cua.replace(/\,/g, "")) || 0;
+    let vlr20 = cant20 * 20000;
+    let cant10 = parseFloat(data.cant10_cua.replace(/\,/g, "")) || 0;
+    let vlr10 = cant10 * 10000;
+    let cant5 = parseFloat(data.cant5_cua.replace(/\,/g, "")) || 0;
+    let vlr5 = cant5 * 5000;
+    let cant2 = parseFloat(data.cant2_cua.replace(/\,/g, "")) || 0;
+    let vlr2 = cant2 * 2000;
+    let cant1 = parseFloat(data.cant1_cua.replace(/\,/g, "")) || 0;
+    let vlr1 = cant1 * 1000;
+    let vlrmon = parseFloat(data.vlrmonedas_cua.replace(/\,/g, "")) || 0;
+
+    let totalefectivo = vlr100 + vlr50 + vlr20 + vlr10 + vlr5 + vlr2 + vlr1 + vlrmon
+    let diferencia = totalcuadre - totalefectivo
+
+    let layout = {
+        vLineColor: "#A4A4A4",
+        hLineColor: "#A4A4A4",
+        hLineWidth: function (i, node) {
+            return 0.3;
+        },
+        vLineWidth: function (i, node) {
+            return 0.3;
+        },
+    };
+
     return {
+        ...stylePDF,
         content: [
             {
+                fontSize: 6.5,
                 headerRows: 1,
-                fontSize: 11,
                 table: {
-                    widths: ["*", "*", "*"],
-                    heights: 15,
+                    widths: ["auto", "auto", "auto", "auto", "auto", "auto", "auto"],
                     body: [
                         [
                             {
+                                colSpan: 7,
+                                image: logo.message.message,
+                                fit: [100, 100],
+                                alignment: "center",
+                                margin: [0, 2],
+                            },
+                            "", "", "", "", "", "",
+                        ],
+                        [
+                            {
+                                fontSize: 10,
+                                colSpan: 7,
+                                text: [
+                                    { text: "Cierre de Caja:  ", bold: true },
+                                    parseInt(data.nro_cua.trim()),
+                                ],
+                                style: "center",
+                                margin: [0, 2],
+                            },
+                            "", "", "", "", "", "",
+                        ],
+                        [
+                            {
+                                fontSize: 10,
+                                colSpan: 4,
+                                text: [
+                                    { text: "Fecha Caja:  ", style: "center" },
+                                    data.fecha_cua,
+                                ],
+                            },
+                            "", "", "",
+                            {
+                                fontSize: 10,
                                 colSpan: 3,
-                                text: "CIERRE DE CAJA",
-                                style: "center",
-                                margin: [0, 6],
+                                text: [
+                                    { text: "Turno:  ", style: "center" },
+                                    data.turno_cua
+                                ],
                             },
+                            "", "",
+                        ],
+                        [
+                            {
+                                colSpan: 7,
+                                text: [
+                                    "Despachador: ",
+                                    { text: data.taquillero_cua.trim(), bold: true },
+                                ],
+                                fontSize: 8,
+                            },
+                            "",
+                            "",
+                            "",
+                            "",
                             "",
                             "",
                         ],
                         [
                             {
-                                colSpan: 2,
-                                text: `Fecha: `,
-                                bold: true,
+                                fontSize: 10,
+                                colSpan: 7,
+                                text: [
+                                    { text: "Tiquete Inicial:  ", bold: true },
+                                    parseInt(data.tiqini_cua.trim()),
+                                ],
                             },
-                            "",
-                            {
-                                text: `Turno: `,
-                                bold: true,
-                            },
+                            "", "", "", "", "", "",
                         ],
                         [
+                            {
+                                fontSize: 10,
+                                colSpan: 7,
+                                text: [
+                                    { text: "Tiquete Final:  ", bold: true },
+                                    parseInt(data.tiqfin_cua.trim()),
+                                ],
+                            },
+                            "", "", "", "", "", "",
+                        ],
+                        [
+                            {
+                                fontSize: 10,
+                                colSpan: 7,
+                                text: [
+                                    { text: "Ingresos Intermunicipales", fontSize: 10, bold: true, style: "center" },
+
+                                ],
+                            },
+                            "", "", "", "", "", "",
+                        ],
+
+                        [
+                            {
+                                fontSize: 8,
+                                colSpan: 4,
+                                text: [
+                                    { text: "CONCEPTO:  ", style: "center", bold: false },
+                                ],
+                            },
+                            "", "", "",
+                            {
+                                fontSize: 8,
+                                colSpan: 3,
+                                text: [
+                                    { text: "VALOR", style: "center", bold: false },
+                                ],
+                            },
+                            "", "",
+                        ],
+                        [
+                            { colSpan: 4, text: "Saldo Inicial", style: "left", fontSize: 8 },
+                            "",
+                            "",
+                            "",
                             {
                                 colSpan: 3,
-                                text: `Despachador: `,
-                                bold: true,
+                                text: "$ " + format_num(data.saldoini_cua.trim() || 0),
+                                fontSize: 8,
+                                alignment: "right",
                             },
                             "",
                             "",
                         ],
                         [
-                            {
-                                colSpan: 2,
-                                text: ["Tiquete inicial: ", { text: data.tiqini_rep, bold: true }],
-                                alignment: "center",
-                            },
-                            "",
-                            {
-                                text: ["RPC inicial: ", { text: "0", bold: true }],
-                                alignment: "center",
-                            },
-                        ],
-                        [
-                            {
-                                colSpan: 2,
-                                text: ["Tiquete final: ", { text: data.tiqfin_rep, bold: true }],
-                                alignment: "center",
-                            },
-                            "",
-                            {
-                                text: ["RPC final: ", { text: "0", bold: true }],
-                                alignment: "center",
-                            },
-                        ],
-                        [
-                            {
-                                colSpan: 2,
-                                text: ["Total tiquetes: ", { text: "0", bold: true }],
-                                alignment: "center",
-                            },
+                            { colSpan: 4, text: "Ventas", style: "left", fontSize: 8 },
                             "",
                             "",
-                        ],
-                        [
+                            "",
                             {
                                 colSpan: 3,
-                                text: "INGRESOS INTERMUNICIPALES",
-                                style: "center",
-                                margin: [0, 4],
-                            },
-                            "",
-                            "",
-                        ],
-                        [
-                            {
-                                colSpan: 2,
-                                text: "CONCEPTO",
-                                style: "center",
-                            },
-                            "",
-                            {
-                                text: "VALOR",
-                                style: "center",
-                            },
-                        ],
-                        [
-                            {
-                                colSpan: 2,
-                                text: "Ventas",
-                            },
-                            "",
-                            {
-                                text: `$${format_num(data.ventas_rep)}`,
+                                text: "$ " + format_num(data.ventas_cua.replace(/\,/g, "").trim() || 0),
+                                fontSize: 8,
                                 alignment: "right",
                             },
+                            "",
+                            "",
                         ],
+
                         [
-                            {
-                                colSpan: 2,
-                                text: "RPC",
-                            },
+                            { colSpan: 4, text: "Seguro", style: "left", fontSize: 8 },
+                            "",
+                            "",
                             "",
                             {
-                                text: `$${format_num(data.rpc_rep)}`,
+                                colSpan: 3,
+                                text: "$ " + format_num(data.seguro_cua.trim() || 0),
+                                fontSize: 8,
                                 alignment: "right",
-                            },
-                        ],
-                        [
-                            {
-                                colSpan: 2,
-                                text: "Egresos",
                             },
                             "",
-                            {
-                                text: `$${format_num(data.egresos_rep)}`,
-                                alignment: "right",
-                            },
+                            "",
                         ],
                         [
-                            {
-                                colSpan: 2,
-                                text: "Redbus",
-                            },
+                            { colSpan: 4, text: "RPC", style: "left", fontSize: 8 },
+                            "",
+                            "",
                             "",
                             {
-                                text: `$${format_num(data.redbus_rep)}`,
+                                colSpan: 3,
+                                text: "$ " + format_num(data.rpc_cua.trim() || 0),
+                                fontSize: 8,
                                 alignment: "right",
-                            },
-                        ],
-                        [
-                            {
-                                colSpan: 2,
-                                text: "Tarjeta débito",
                             },
                             "",
-                            {
-                                text: `$0`,
-                                alignment: "right",
-                            },
+                            "",
                         ],
+
                         [
-                            {
-                                colSpan: 2,
-                                text: "Tarjeta crédito",
-                            },
+                            { colSpan: 4, text: "Egresos", style: "left", fontSize: 8 },
+                            "",
+                            "",
                             "",
                             {
-                                text: `$0`,
+                                colSpan: 3,
+                                text: "$ " + format_num(data.egresos_cua.trim() || 0),
+                                fontSize: 8,
                                 alignment: "right",
-                            },
-                        ],
-                        [
-                            {
-                                colSpan: 2,
-                                text: "Convenios",
                             },
                             "",
-                            {
-                                text: `$0`,
-                                alignment: "right",
-                            },
+                            "",
                         ],
                         [
-                            {
-                                colSpan: 2,
-                                text: "Brasilia",
-                            },
+                            { colSpan: 4, text: "Avances", style: "left", fontSize: 8 },
+                            "",
+                            "",
                             "",
                             {
-                                text: `$${format_num(data.brasilia_rep)}`,
+                                colSpan: 3,
+                                text: "$ " + format_num(data.avances_cua.trim() || 0),
+                                fontSize: 8,
                                 alignment: "right",
-                            },
-                        ],
-                        [
-                            {
-                                colSpan: 2,
-                                text: "Pinbus",
                             },
                             "",
+                            "",
+                        ],
+
+                        [
+                            { colSpan: 4, text: "Redbus", style: "left", fontSize: 8 },
+                            "",
+                            "",
+                            "",
                             {
-                                text: `$${format_num(data.pinbus_rep)}`,
+                                colSpan: 3,
+                                text: "$ " + format_num(data.redbus_cua.trim() || 0),
+                                fontSize: 8,
                                 alignment: "right",
                             },
+                            "",
+                            "",
+                        ],
+                        [
+                            { colSpan: 4, text: "Pinbus", style: "left", fontSize: 8 },
+                            "",
+                            "",
+                            "",
+                            {
+                                colSpan: 3,
+                                text: "$ " + format_num(data.pinbus_cua.trim() || 0),
+                                fontSize: 8,
+                                alignment: "right",
+                            },
+                            "",
+                            "",
                         ],
                         [
                             {
-                                colSpan: 2,
-                                text: "TOTALES:",
+                                colSpan: 4,
+                                text: "Total Cierre de Caja",
                                 style: "right",
+                                fontSize: 10,
                             },
                             "",
-                            `$${format_num(data.totales_rep)}`,
-                        ],
-                        [
+                            "",
+                            "",
                             {
                                 colSpan: 3,
-                                text: "EFECTIVO ENTREGADO",
-                                style: "center",
-                                margin: [0, 4],
+                                text: "$ " + format_num((totalcuadre) || 0),
+                                fontSize: 8,
+                                alignment: "right",
                             },
                             "",
                             "",
+
                         ],
                         [
                             {
-                                text: "Denominación",
-                                bold: true,
+                                fontSize: 10,
+                                colSpan: 7,
+                                text: [
+                                    { text: "Efectivo Entregado", fontSize: 10, bold: true, style: "center" },
+
+                                ],
                             },
-                            {
-                                text: "Cantidad",
-                                bold: true,
-                            },
-                            {
-                                text: "Total",
-                                bold: true,
-                            },
+                            "", "", "", "", "", "",
                         ],
+
                         [
                             {
-                                text: "$100,000",
-                                alignment: "right",
+                                fontSize: 8,
+                                colSpan: 3,
+                                text: [
+                                    { text: "Denominación", style: "center", bold: false },
+                                ],
                             },
+                            "", "",
                             {
-                                text: data.cienk.cantidad || 0,
-                                alignment: "center",
+                                fontSize: 8,
+                                colSpan: 2,
+                                text: [
+                                    { text: "Cant", style: "center", bold: false },
+                                ],
                             },
+                            "",
                             {
-                                text: `$${format_num(data.cienk.total)}`,
-                                alignment: "right",
+                                fontSize: 8,
+                                colSpan: 2,
+                                text: [
+                                    { text: "Total", style: "center", bold: false },
+                                ],
                             },
+                            "",
                         ],
+
                         [
                             {
-                                text: "$50,000",
-                                alignment: "right",
+                                fontSize: 8,
+                                colSpan: 3,
+                                text: [
+                                    { text: "$100.000", style: "center", bold: false },
+                                ],
                             },
-                            {
-                                text: data.ciencuentak.cantidad || 0,
-                                alignment: "center",
-                            },
-                            {
-                                text: `$${format_num(data.ciencuentak.total)}`,
-                                alignment: "right",
-                            },
-                        ],
-                        [
-                            {
-                                text: "$20,000",
-                                alignment: "right",
-                            },
-                            {
-                                text: data.veintek.cantidad || 0,
-                                alignment: "center",
-                            },
-                            {
-                                text: `$${format_num(data.veintek.total)}`,
-                                alignment: "right",
-                            },
-                        ],
-                        [
-                            {
-                                text: "$10,000",
-                                alignment: "right",
-                            },
-                            {
-                                text: data.diezk.cantidad || 0,
-                                alignment: "center",
-                            },
-                            {
-                                text: `$${format_num(data.diezk.total)}`,
-                                alignment: "right",
-                            },
-                        ],
-                        [
-                            {
-                                text: "$5,000",
-                                alignment: "right",
-                            },
-                            {
-                                text: data.cincok.cantidad || 0,
-                                alignment: "center",
-                            },
-                            {
-                                text: `$${format_num(data.cincok.total)}`,
-                                alignment: "right",
-                            },
-                        ],
-                        [
-                            {
-                                text: "$2,000",
-                                alignment: "right",
-                            },
-                            {
-                                text: data.dosk.cantidad || 0,
-                                alignment: "center",
-                            },
-                            {
-                                text: `$${format_num(data.dosk.total)}`,
-                                alignment: "right",
-                            },
-                        ],
-                        [
-                            {
-                                text: "$1,000",
-                                alignment: "right",
-                            },
-                            {
-                                text: data.unk.cantidad || 0,
-                                alignment: "center",
-                            },
-                            {
-                                text: `$${format_num(data.unk.total)}`,
-                                alignment: "right",
-                            },
-                        ],
-                        [
-                            {
-                                text: "Moneda",
-                                alignment: "right",
-                            },
-                            {
-                                text: data.moneda || 0,
-                                alignment: "center",
-                            },
-                            {
-                                text: `$${format_num(data.moneda)}`,
-                                alignment: "right",
-                            },
-                        ],
-                        [
+                            "", "",
                             {
                                 colSpan: 2,
-                                text: "TOTAL EFECTIVO:",
-                                style: "right",
+                                text: format_num(cant100),
+                                fontSize: 8,
+                                alignment: "right",
                             },
                             "",
-                            { text: `$${format_num(data.total)}`, alignment: "right" },
+                            {
+                                colSpan: 2,
+                                text: "$ " + format_num(vlr100),
+                                fontSize: 8,
+                                alignment: "right",
+                            },
+                            "",
                         ],
                         [
                             {
+                                fontSize: 8,
+                                colSpan: 3,
+                                text: [
+                                    { text: "$50.000", style: "center", bold: false },
+                                ],
+                            },
+                            "", "",
+                            {
                                 colSpan: 2,
-                                text: "DIFERENCIA:",
-                                style: "right",
+                                text: format_num(cant50),
+                                fontSize: 8,
+                                alignment: "right",
                             },
                             "",
-                            { text: `$${format_num(data.diferencia)}`, alignment: "right" },
+                            {
+                                colSpan: 2,
+                                text: "$ " + format_num(vlr50),
+                                fontSize: 8,
+                                alignment: "right",
+                            },
+                            "",
                         ],
+                        [
+                            {
+                                fontSize: 8,
+                                colSpan: 3,
+                                text: [
+                                    { text: "$20.000", style: "center", bold: false },
+                                ],
+                            },
+                            "", "",
+                            {
+                                colSpan: 2,
+                                text: format_num(cant20),
+                                fontSize: 8,
+                                alignment: "right",
+                            },
+                            "",
+                            {
+                                colSpan: 2,
+                                text: "$" + format_num(vlr20),
+                                fontSize: 8,
+                                alignment: "right",
+                            },
+                            "",
+                        ],
+
+                        [
+                            {
+                                fontSize: 8,
+                                colSpan: 3,
+                                text: [
+                                    { text: "$10.000", style: "center", bold: false },
+                                ],
+                            },
+                            "", "",
+                            {
+                                colSpan: 2,
+                                text: format_num(cant10),
+                                fontSize: 8,
+                                alignment: "right",
+                            },
+                            "",
+                            {
+                                colSpan: 2,
+                                text: "$" + format_num(vlr10),
+                                fontSize: 8,
+                                alignment: "right",
+                            },
+                            "",
+                        ],
+                        [
+                            {
+                                fontSize: 8,
+                                colSpan: 3,
+                                text: [
+                                    { text: "$5.000", style: "center", bold: false },
+                                ],
+                            },
+                            "", "",
+                            {
+                                colSpan: 2,
+                                text: format_num(cant5),
+                                fontSize: 8,
+                                alignment: "right",
+                            },
+                            "",
+                            {
+                                colSpan: 2,
+                                text: "$" + format_num(vlr5),
+                                fontSize: 8,
+                                alignment: "right",
+                            },
+                            "",
+                        ],
+                        [
+                            {
+                                fontSize: 8,
+                                colSpan: 3,
+                                text: [
+                                    { text: "$2.000", style: "center", bold: false },
+                                ],
+                            },
+                            "", "",
+                            {
+                                colSpan: 2,
+                                text: format_num(cant2),
+                                fontSize: 8,
+                                alignment: "right",
+                            },
+                            "",
+                            {
+                                colSpan: 2,
+                                text: "$ " + format_num(vlr2),
+                                fontSize: 8,
+                                alignment: "right",
+                            },
+                            "",
+                        ],
+                        [
+                            {
+                                fontSize: 8,
+                                colSpan: 3,
+                                text: [
+                                    { text: "$1.000", style: "center", bold: false },
+                                ],
+                            },
+                            "", "",
+                            {
+                                colSpan: 2,
+                                text: format_num(cant1),
+                                fontSize: 8,
+                                alignment: "right",
+                            },
+                            "",
+                            {
+                                colSpan: 2,
+                                text: "$ " + format_num(vlr1),
+                                fontSize: 8,
+                                alignment: "right",
+                            },
+                            "",
+                        ],
+                        [
+                            {
+                                fontSize: 8,
+                                colSpan: 3,
+                                text: [
+                                    { text: "Moneda", style: "center", bold: false },
+                                ],
+                            },
+                            "", "",
+                            {
+                                colSpan: 2,
+                                text: " ",
+                                fontSize: 8,
+                                alignment: "center",
+                            },
+                            "",
+                            {
+                                colSpan: 2,
+                                text: "$ " + format_num(vlrmon),
+                                fontSize: 8,
+                                alignment: "right",
+                            },
+                            "",
+                        ],
+
+                        [
+                            {
+                                colSpan: 5,
+                                text: "Total Efectivo Entregado",
+                                style: "right",
+                                fontSize: 10,
+                            },
+                            "",
+                            "",
+                            "",
+                            "",
+                            {
+                                colSpan: 2,
+                                text: "$ " + format_num((totalefectivo) || 0),
+                                fontSize: 8,
+                                alignment: "right",
+                            },
+                            "",
+                        ],
+
+                        [
+                            {
+                                colSpan: 5,
+                                text: "Diferencia",
+                                style: "right",
+                                fontSize: 10,
+                            },
+                            "",
+                            "",
+                            "",
+                            "",
+                            {
+                                colSpan: 2,
+                                text: "$ " + format_num((diferencia) || 0),
+                                fontSize: 8,
+                                alignment: "right",
+                            },
+                            "",
+                        ],
+                        [
+                            {
+                                colSpan: 7,
+                                text: [
+                                    { text: "Observaciones:\n  ", bold: true },
+                                    data.observacion_cua.trim(),
+                                ],
+                                fontSize: 8,
+                            },
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                        ],
+
+
                     ],
                 },
-                layout: {
-                    vLineColor: "#A4A4A4",
-                    hLineColor: "#A4A4A4",
-                },
-            },
-            {
-                margin: [0, 20],
-                text: [{ text: `Observaciones:\n`, bold: true }, data.observaciones || ''],
+                layout,
             },
         ],
         styles: {
@@ -1073,6 +1303,11 @@ const close_box = (data) => {
                 alignment: "right",
             },
         },
+        // pageSize: {
+        //   width: 300,
+        //   height: "auto",
+        // },
+        // pageMargins: [10, 10, 10, 10],
     }
 }
 

@@ -2,18 +2,18 @@
   <f7-popup v-model:opened="estado" @popup:opened="open" @popup:closed="closed">
     <f7-view>
       <f7-page>
-        <f7-navbar title="Libro de viajes">
+        <f7-navbar title="Cierre de caja">
           <f7-nav-right>
             <f7-link icon-f7="multiply" popup-close></f7-link>
           </f7-nav-right>
         </f7-navbar>
 
         <f7-card>
-          <f7-card-header class="no-padding">
+          <!-- <f7-card-header class="no-padding">
             <f7-list class="width-100">
               <f7-list-item group-title> Cierre de caja </f7-list-item>
             </f7-list>
-          </f7-card-header>
+          </f7-card-header> -->
 
           <f7-card-content :padding="false">
             <f7-list>
@@ -125,6 +125,7 @@
               >
               </f7-list-input>
               <f7-list-input
+                v-if="false"
                 label="RPC"
                 type="text"
                 outline
@@ -134,6 +135,7 @@
               >
               </f7-list-input>
               <f7-list-input
+                v-if="false"
                 label="Egresos"
                 type="text"
                 outline
@@ -152,6 +154,7 @@
               >
               </f7-list-input>
               <f7-list-input
+                v-if="false"
                 label="Redbus"
                 type="text"
                 outline
@@ -161,6 +164,7 @@
               >
               </f7-list-input>
               <f7-list-input
+                v-if="false"
                 label="tarjeta debito"
                 type="text"
                 outline
@@ -170,6 +174,7 @@
               >
               </f7-list-input>
               <f7-list-input
+                v-if="false"
                 label="Tarjeta credito"
                 type="text"
                 outline
@@ -179,6 +184,7 @@
               >
               </f7-list-input>
               <f7-list-input
+                v-if="false"
                 label="Brasilia"
                 type="text"
                 outline
@@ -188,6 +194,7 @@
               >
               </f7-list-input>
               <f7-list-input
+                v-if="false"
                 label="Pinbus"
                 type="text"
                 outline
@@ -247,6 +254,7 @@ import { ref } from "@vue/reactivity";
 import { watch } from "@vue/runtime-core";
 import { loader, toast, format_num } from "../../js/utils/plugins";
 import { useStore } from "vuex";
+import { imprimir } from "../../js/utils/print";
 
 export default {
   props: {
@@ -270,7 +278,7 @@ export default {
         if (!val) form.value = { content: {} };
         else {
           form.value = {
-            content: { ..._.cloneDeep(props.params) },
+            content: { ..._.cloneDeep(props.params.content) },
           };
           form.value.consecutive = props.consecutive;
         }
@@ -285,6 +293,7 @@ export default {
 
     const save = async () => {
       try {
+        // loader(true);
         let data = { ...form.value.content };
 
         let agencia = info?.key_point?.turn?.agencia_rep || "";
@@ -392,9 +401,19 @@ export default {
           `${form.value.consecutive}|`
         );
 
-        console.log("response: ", response);
-        await imprimir({ data: response.message[0], formato: "close_box" });
-        loader(true);
+        imprimir({
+          data: {
+            ...response.message[0],
+            id_logo: parseFloat(info.session.substr(0, 15)),
+          },
+          formato: "close_box",
+        })
+          .then(() => {
+            loader(false);
+          })
+          .catch((error) => {
+            loader(false);
+          });
       } catch (error) {
         loader(false);
         toast("Error generando la impresion");

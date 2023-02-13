@@ -34,6 +34,7 @@ const imprimir = ({ data = {}, formato = '', nit = 0 }) => {
                         error: function (data) {
                             data = JSON.parse(Data);
                             console.log("failed" + data.error);
+                            reject(data.error)
                         },
                     });
 

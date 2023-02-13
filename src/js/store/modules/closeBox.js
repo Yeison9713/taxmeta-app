@@ -116,7 +116,7 @@ export default {
                 let token = state.rootGetters['middleware/get_info']
 
                 let data = {
-                    data: `${token.session}${send_data}`,
+                    data: `${token.session}|${send_data}`,
                     url: state.rootGetters['setting/get_url']('save_close_box'),
                 }
 

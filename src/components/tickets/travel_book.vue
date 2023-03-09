@@ -130,11 +130,7 @@
                   <f7-list>
                     <f7-list-item>
                       <div
-                        class="
-                          width-100
-                          display-flex
-                          justify-content-space-between
-                        "
+                        class="width-100 display-flex justify-content-space-between"
                       >
                         <b>Destino:</b>
                         <div>{{ item.destino_tiq }}</div>
@@ -142,11 +138,7 @@
                     </f7-list-item>
                     <f7-list-item>
                       <div
-                        class="
-                          width-100
-                          display-flex
-                          justify-content-space-between
-                        "
+                        class="width-100 display-flex justify-content-space-between"
                       >
                         <b>Sillas:</b>
                         <div>{{ item.sillas }}</div>
@@ -154,11 +146,7 @@
                     </f7-list-item>
                     <f7-list-item>
                       <div
-                        class="
-                          width-100
-                          display-flex
-                          justify-content-space-between
-                        "
+                        class="width-100 display-flex justify-content-space-between"
                       >
                         <b>Forma pago:</b>
                         <div>{{ item.formapago }}</div>
@@ -166,11 +154,7 @@
                     </f7-list-item>
                     <f7-list-item>
                       <div
-                        class="
-                          width-100
-                          display-flex
-                          justify-content-space-between
-                        "
+                        class="width-100 display-flex justify-content-space-between"
                       >
                         <b>Cantidad:</b>
                         <div>{{ item.cantidad }}</div>
@@ -178,11 +162,7 @@
                     </f7-list-item>
                     <f7-list-item>
                       <div
-                        class="
-                          width-100
-                          display-flex
-                          justify-content-space-between
-                        "
+                        class="width-100 display-flex justify-content-space-between"
                       >
                         <b>Valor:</b>
                         <div>{{ item.valor }}</div>
@@ -197,11 +177,7 @@
                   <f7-list>
                     <f7-list-item>
                       <div
-                        class="
-                          width-100
-                          display-flex
-                          justify-content-space-between
-                        "
+                        class="width-100 display-flex justify-content-space-between"
                       >
                         <b>Seguro:</b>
                         <div>${{ format_num(form.totalSeguro) }}</div>
@@ -209,11 +185,7 @@
                     </f7-list-item>
                     <f7-list-item>
                       <div
-                        class="
-                          width-100
-                          display-flex
-                          justify-content-space-between
-                        "
+                        class="width-100 display-flex justify-content-space-between"
                       >
                         <b>Cantidad:</b>
                         <div>{{ format_num(form.totalCantidad) }}</div>
@@ -221,11 +193,7 @@
                     </f7-list-item>
                     <f7-list-item>
                       <div
-                        class="
-                          width-100
-                          display-flex
-                          justify-content-space-between
-                        "
+                        class="width-100 display-flex justify-content-space-between"
                       >
                         <b>Valor:</b>
                         <div>${{ format_num(form.totalValor) }}</div>
@@ -590,21 +558,33 @@ export default {
           `${props.id_agc}|${consecutive}|`
         );
 
-        imprimir({ data: get_book.message[0], formato: "travel_book" })
-          .then((res) => {
-            console.log("Response print: ", res);
-            loader(false);
-            closed();
-          })
-          .catch((error) => {
-            console.log("Ocurrio un error en la impresion", error);
-            loader(false);
-          });
+        await print_close_box(get_book.message[0]);
+        await time_out(500);
+
+        await print_close_box(get_book.message[0]);
+        await time_out(300);
+
+        loader(false);
+        closed();
       } catch (error) {
         loader(false);
         console.log("Ocurrio un error en el guardado", error);
         toast("Ocurrio un error en el cierre del libro");
       }
+    };
+
+    const print_close_box = async (data) => {
+      try {
+        await imprimir({ data: _.cloneDeep(data), formato: "travel_book" });
+      } catch (error) {
+        console.log("Ocurrio un error en la impresion", error);
+      }
+
+      return true;
+    };
+
+    const time_out = (ms) => {
+      return new Promise((resolve) => setTimeout(resolve, ms));
     };
 
     return {

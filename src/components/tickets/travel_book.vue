@@ -278,6 +278,7 @@
               </f7-list-input>
 
               <f7-list-input
+                v-if="false"
                 label="Recaudo"
                 type="text"
                 outline
@@ -288,6 +289,7 @@
               </f7-list-input>
 
               <f7-list-input
+                v-if="false"
                 label="seguridad Social"
                 type="text"
                 outline
@@ -321,13 +323,8 @@
           <f7-card-footer class="width-100 no-padding margin-top">
             <f7-list class="width-100">
               <f7-list-item class="width-100">
-                <f7-button
-                  class="width-100"
-                  large
-                  outline
-                  :disabled="restarTotal() != 0 ? true : false"
-                  @click="close_book"
-                  >Cerrar. Libro</f7-button
+                <f7-button class="width-100" large outline @click="close_book"
+                  >Cerrar libro</f7-button
                 >
               </f7-list-item>
             </f7-list>
@@ -525,8 +522,24 @@ export default {
       return totalPagar;
     };
 
+    const validate_close_book = () => {
+      let libro = form.value;
+      let avance = parseFloat(libro.avance) || 0;
+      let efectivo = parseFloat(libro.efectivo) || 0;
+
+      let diff = efectivo - avance;
+
+      if (diff != 0) {
+        toast("El valor del avance es diferente al del efectivo");
+      }
+
+      return diff == 0 ? true : false;
+    };
+
     const close_book = async () => {
       try {
+        if (!validate_close_book()) return false;
+
         const loader_src = loader(true);
         loader_src.setTitle("Cerrando libro...");
 
@@ -598,6 +611,7 @@ export default {
       input_mask,
       restarTotal,
       close_book,
+      validate_close_book,
     };
   },
 };

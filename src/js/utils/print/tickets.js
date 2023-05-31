@@ -704,12 +704,14 @@ const close_box = async (data) => {
         pageMargins: [20, 10, 10, 10],
     };
 
-    let ventas = parseFloat(data.ventas_cua.replace(/\,/g, "")) || 0;
-    let seguro = parseFloat(data.seguro_cua.replace(/\,/g, "")) || 0;
-    let rpc = parseFloat(data.rpc_cua.replace(/\,/g, "")) || 0;
-    let egresos = parseFloat(data.egresos_cua.replace(/\,/g, "")) || 0;
-    let avances = parseFloat(data.avances_cua.replace(/\,/g, "")) || 0;
-    let saldo = parseFloat(data.saldoini_cua.replace(/\,/g, "")) || 0;
+    let ventas = parseFloat(data.ventas_cua.replace(/\,/g, "").trim()) || 0;
+    let seguro = parseFloat(data.seguro_cua.replace(/\,/g, "").trim()) || 0;
+    let rpc = parseFloat(data.rpc_cua.replace(/\,/g, "").trim()) || 0;
+    let egresos = parseFloat(data.egresos_cua.replace(/\,/g, "").trim()) || 0;
+    let avances = parseFloat(data.avances_cua.replace(/\,/g, "").trim()) || 0;
+    let saldo = parseFloat(data.saldoini_cua.replace(/\,/g, "").trim()) || 0;
+    let redBus = parseFloat(data.redbus_cua.replace(/\,/g, "").trim()) || 0
+    let pinbus = parseFloat(data.pinbus_cua.replace(/\,/g, "").trim()) || 0
 
     let totalcuadre = ventas + rpc - egresos + seguro - avances + saldo
 
@@ -870,7 +872,7 @@ const close_box = async (data) => {
                             "",
                             {
                                 colSpan: 3,
-                                text: "$ " + format_num(data.saldoini_cua.trim() || 0),
+                                text: "$ " + format_num(saldo || 0),
                                 fontSize: 8,
                                 alignment: "right",
                             },
@@ -884,7 +886,7 @@ const close_box = async (data) => {
                             "",
                             {
                                 colSpan: 3,
-                                text: "$ " + format_num(data.ventas_cua.replace(/\,/g, "").trim() || 0),
+                                text: "$ " + format_num(ventas || 0),
                                 fontSize: 8,
                                 alignment: "right",
                             },
@@ -899,7 +901,7 @@ const close_box = async (data) => {
                             "",
                             {
                                 colSpan: 3,
-                                text: "$ " + format_num(data.seguro_cua.trim() || 0),
+                                text: "$ " + format_num(seguro || 0),
                                 fontSize: 8,
                                 alignment: "right",
                             },
@@ -913,7 +915,7 @@ const close_box = async (data) => {
                             "",
                             {
                                 colSpan: 3,
-                                text: "$ " + format_num(data.rpc_cua.trim() || 0),
+                                text: "$ " + format_num(rpc || 0),
                                 fontSize: 8,
                                 alignment: "right",
                             },
@@ -928,7 +930,7 @@ const close_box = async (data) => {
                             "",
                             {
                                 colSpan: 3,
-                                text: "$ " + format_num(data.egresos_cua.trim() || 0),
+                                text: "$ " + format_num(egresos || 0),
                                 fontSize: 8,
                                 alignment: "right",
                             },
@@ -942,7 +944,7 @@ const close_box = async (data) => {
                             "",
                             {
                                 colSpan: 3,
-                                text: "$ " + format_num(data.avances_cua.trim() || 0),
+                                text: "$ " + format_num(avances || 0),
                                 fontSize: 8,
                                 alignment: "right",
                             },
@@ -957,7 +959,7 @@ const close_box = async (data) => {
                             "",
                             {
                                 colSpan: 3,
-                                text: "$ " + format_num(data.redbus_cua.trim() || 0),
+                                text: "$ " + format_num(redBus || 0),
                                 fontSize: 8,
                                 alignment: "right",
                             },
@@ -971,7 +973,7 @@ const close_box = async (data) => {
                             "",
                             {
                                 colSpan: 3,
-                                text: "$ " + format_num(data.pinbus_cua.trim() || 0),
+                                text: "$ " + format_num(pinbus || 0),
                                 fontSize: 8,
                                 alignment: "right",
                             },

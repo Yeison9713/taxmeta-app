@@ -12,12 +12,7 @@
         <f7-toolbar>
           <div class="left">
             <div
-              class="
-                display-flex
-                padding
-                justify-content-space-between
-                align-items-center
-              "
+              class="display-flex padding justify-content-space-between align-items-center"
             >
               <div><b>Menu </b></div>
             </div>
@@ -27,11 +22,10 @@
           </div>
         </f7-toolbar>
 
-        <f7-list menu-list class="no-hairline menu_user">
+        <f7-list accordion-list class="no-hairline menu_user">
           <f7-list-item
             link="/user/profile/"
             title="Perfil"
-            @click="() => (selected = 'profile')"
             sheet-close=".sheet-menu-list"
           >
             <template #media>
@@ -43,55 +37,94 @@
             </template>
           </f7-list-item>
 
-          <f7-list-item
-            link="/user/tickets/"
-            title="Tiquetes"
-            @click="() => (selected = 'tickets')"
-            sheet-close=".sheet-menu-list"
-          >
+          <f7-list-item accordion-item title="Procesos">
             <template #media>
               <f7-icon
-                md="material:article"
-                aurora="f7:house_fill"
-                ios="f7:house_fill"
+                md="material:rebase_edit"
+                aurora="f7:rebase_edit"
+                ios="f7:rebase_edit"
               />
             </template>
+
+            <f7-accordion-content>
+              <f7-list menu-list>
+                <f7-list-item
+                  link="/user/tickets/"
+                  title="Tiquetes"
+                  sheet-close=".sheet-menu-list"
+                >
+                  <template #media>
+                    <f7-icon
+                      md="material:article"
+                      aurora="f7:house_fill"
+                      ios="f7:house_fill"
+                    />
+                  </template>
+                </f7-list-item>
+
+                <f7-list-item
+                  link="/user/vehicle-load/"
+                  title="Cargues"
+                  sheet-close=".sheet-menu-list"
+                >
+                  <template #media>
+                    <f7-icon
+                      md="material:bookmark"
+                      aurora="f7:house_fill"
+                      ios="f7:house_fill"
+                    />
+                  </template>
+                </f7-list-item>
+
+                <f7-list-item
+                  link="/user/close-box/"
+                  title="Cierre de caja"
+                  sheet-close=".sheet-menu-list"
+                >
+                  <template #media>
+                    <f7-icon
+                      md="material:request_quote"
+                      aurora="f7:house_fill"
+                      ios="f7:house_fill"
+                    />
+                  </template>
+                </f7-list-item>
+              </f7-list>
+            </f7-accordion-content>
           </f7-list-item>
 
-          <f7-list-item
-            link="/user/vehicle-load/"
-            title="Cargues"
-            @click="() => (selected = 'tickets')"
-            sheet-close=".sheet-menu-list"
-          >
+          <f7-list-item accordion-item title="Reportes">
             <template #media>
               <f7-icon
-                md="material:bookmark"
-                aurora="f7:house_fill"
-                ios="f7:house_fill"
+                md="material:receipt_long"
+                aurora="f7:receipt_long"
+                ios="f7:receipt_long"
               />
             </template>
-          </f7-list-item>
 
-          <f7-list-item
-            link="/user/close-box/"
-            title="Cierre de caja"
-            @click="() => (selected = 'tickets')"
-            sheet-close=".sheet-menu-list"
-          >
-            <template #media>
-              <f7-icon
-                md="material:request_quote"
-                aurora="f7:house_fill"
-                ios="f7:house_fill"
-              />
-            </template>
+            <f7-accordion-content>
+              <f7-list menu-list>
+                <f7-list-item
+                  link="/user/report/tickets/"
+                  title="Tiquetes"
+                  sheet-close=".sheet-menu-list"
+                >
+                  <template #media>
+                    <f7-icon
+                      md="material:article"
+                      aurora="f7:house_fill"
+                      ios="f7:house_fill"
+                    />
+                  </template>
+                </f7-list-item>
+              </f7-list>
+            </f7-accordion-content>
           </f7-list-item>
 
           <f7-list-item
             link
             title="Cerrar sesiòn"
-            @click="(selected = 'logout'), logout()"
+            @click="logout()"
             sheet-close=".sheet-menu-list"
           >
             <template #media>
@@ -114,13 +147,18 @@ import { useStore } from "vuex";
 
 export default {
   setup() {
-    const selected = ref("home");
-    const selectedMedia = ref("home");
     const store = useStore();
 
     const logout = () => store.dispatch("middleware/logout");
 
-    return { selected, selectedMedia, logout };
+    return { logout };
   },
 };
 </script>
+
+<style>
+.menu_user {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+</style>

@@ -363,6 +363,38 @@ export default {
                     .then(resolve)
                     .catch(reject)
             })
-        }
+        },
+
+        all_tickets_r(state, send_data) {
+            return new Promise((resolve, reject) => {
+                let token = state.rootGetters['middleware/get_info']
+                let ip_service = state.rootState.setting?.ip_service || ""
+
+                let data = {
+                    data: `${token.session}|${send_data}`,
+                    url: state.rootGetters['setting/get_url']('tickets_r')
+                }
+
+                request_titan({ url: ip_service, data })
+                    .then(resolve)
+                    .catch(reject)
+            })
+        },
+
+        cancel_travel(state, send_data) {
+            return new Promise((resolve, reject) => {
+                let token = state.rootGetters['middleware/get_info']
+                let ip_service = state.rootState.setting?.ip_service || ""
+
+                let data = {
+                    data: `${token.session}|${send_data}`,
+                    url: state.rootGetters['setting/get_url']('cancel_travel')
+                }
+
+                request_titan({ url: ip_service, data })
+                    .then(resolve)
+                    .catch(reject)
+            })
+        },
     }
 }

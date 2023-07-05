@@ -42,6 +42,7 @@ const f_pagos = [
     { value: 2, text: "Tarjeta credito" },
     { value: 3, text: "Tarjeta debito" },
     { value: 8, text: "Reserva" },
+    { value: 11, text: "Gamarra" },
     { value: 4, text: "Otro" },
 ];
 

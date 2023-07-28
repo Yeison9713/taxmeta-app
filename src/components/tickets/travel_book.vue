@@ -1,10 +1,5 @@
 <template>
-  <f7-popup
-    class="config_rut"
-    v-model:opened="estado"
-    @popup:opened="open"
-    @popup:closed="closed"
-  >
+  <f7-popup class="config_rut" v-model:opened="estado" @popup:opened="open" @popup:closed="closed">
     <f7-view>
       <f7-page>
         <f7-navbar title="Libro de viajes">
@@ -23,147 +18,82 @@
           </f7-card-header>
           <f7-card-content :padding="false">
             <f7-list accordion-list>
-              <f7-list-input
-                label="Origen"
-                type="text"
-                outline
-                floating-label
-                :disabled="true"
-                v-model:value="form.origen"
-              >
+              <f7-list-input label="Origen" type="text" outline floating-label :disabled="true"
+                v-model:value="form.origen">
               </f7-list-input>
 
-              <f7-list-input
-                label="Destino"
-                type="text"
-                outline
-                floating-label
-                :disabled="true"
-                v-model:value="form.destino"
-              >
+              <f7-list-input label="Destino" type="text" outline floating-label :disabled="true"
+                v-model:value="form.destino">
               </f7-list-input>
 
               <f7-list-item-row>
-                <f7-row
-                  no-gap
-                  :style="{ width: '100%' }"
-                  class="display-flex justify-content-end"
-                >
+                <f7-row no-gap :style="{ width: '100%' }" class="display-flex justify-content-end">
                   <f7-col width="50">
-                    <f7-list-input
-                      label="Fecha"
-                      type="text"
-                      outline
-                      floating-label
-                      :disabled="true"
-                      v-model:value="form.fecha"
-                    >
+                    <f7-list-input label="Fecha" type="text" outline floating-label :disabled="true"
+                      v-model:value="form.fecha">
                     </f7-list-input>
                   </f7-col>
 
                   <f7-col width="50">
-                    <f7-list-input
-                      label="Hora"
-                      type="text"
-                      outline
-                      floating-label
-                      :disabled="true"
-                      v-model:value="form.hora"
-                    >
+                    <f7-list-input label="Hora" type="text" outline floating-label :disabled="true"
+                      v-model:value="form.hora">
                     </f7-list-input>
                   </f7-col>
                 </f7-row>
               </f7-list-item-row>
 
               <f7-list-item-row>
-                <f7-row
-                  no-gap
-                  :style="{ width: '100%' }"
-                  class="display-flex justify-content-end"
-                >
+                <f7-row no-gap :style="{ width: '100%' }" class="display-flex justify-content-end">
                   <f7-col width="50">
-                    <f7-list-input
-                      label="Numero de cargue"
-                      type="text"
-                      outline
-                      floating-label
-                      :disabled="true"
-                      v-model:value="form.nroCargue"
-                    >
+                    <f7-list-input label="Numero de cargue" type="text" outline floating-label :disabled="true"
+                      v-model:value="form.nroCargue">
                     </f7-list-input>
                   </f7-col>
 
                   <f7-col width="50">
-                    <f7-list-input
-                      label="Vehiculo"
-                      type="text"
-                      outline
-                      floating-label
-                      :disabled="true"
-                      v-model:value="form.vehiculo"
-                    >
+                    <f7-list-input label="Vehiculo" type="text" outline floating-label :disabled="true"
+                      v-model:value="form.vehiculo">
                     </f7-list-input>
                   </f7-col>
                 </f7-row>
               </f7-list-item-row>
 
-              <f7-list-input
-                label="Conductor"
-                type="text"
-                outline
-                floating-label
-                :disabled="true"
-                v-model:value="form.conductor"
-              >
+              <f7-list-input label="Conductor" type="text" outline floating-label :disabled="true"
+                v-model:value="form.conductor">
               </f7-list-input>
 
               <f7-list-item group-title> Tiquetes </f7-list-item>
 
-              <f7-list-item
-                accordion-item
-                v-for="item in form.tiquetes"
-                :key="item"
-                :title="item.nombres"
-                :after="parseFloat(item.nro_tiq.replace(/\s/g, '')) || 0"
-              >
+              <f7-list-item accordion-item v-for="item in form.tiquetes" :key="item" :title="item.nombres"
+                :after="parseFloat(item.nro_tiq.replace(/\s/g, '')) || 0">
                 <f7-accordion-content>
                   <f7-list>
                     <f7-list-item>
-                      <div
-                        class="width-100 display-flex justify-content-space-between"
-                      >
+                      <div class="width-100 display-flex justify-content-space-between">
                         <b>Destino:</b>
                         <div>{{ item.destino_tiq }}</div>
                       </div>
                     </f7-list-item>
                     <f7-list-item>
-                      <div
-                        class="width-100 display-flex justify-content-space-between"
-                      >
+                      <div class="width-100 display-flex justify-content-space-between">
                         <b>Sillas:</b>
                         <div>{{ item.sillas }}</div>
                       </div>
                     </f7-list-item>
                     <f7-list-item>
-                      <div
-                        class="width-100 display-flex justify-content-space-between"
-                      >
+                      <div class="width-100 display-flex justify-content-space-between">
                         <b>Forma pago:</b>
                         <div>{{ item.formapago }}</div>
                       </div>
                     </f7-list-item>
                     <f7-list-item>
-                      <div
-                        class="width-100 display-flex justify-content-space-between"
-                      >
+                      <div class="width-100 display-flex justify-content-space-between">
                         <b>Cantidad:</b>
                         <div>{{ item.cantidad }}</div>
                       </div>
                     </f7-list-item>
                     <f7-list-item>
-                      <div
-                        class="width-100 display-flex justify-content-space-between"
-                      >
+                      <div class="width-100 display-flex justify-content-space-between">
                         <b>Valor:</b>
                         <div>{{ item.valor }}</div>
                       </div>
@@ -176,25 +106,19 @@
                 <f7-accordion-content>
                   <f7-list>
                     <f7-list-item>
-                      <div
-                        class="width-100 display-flex justify-content-space-between"
-                      >
+                      <div class="width-100 display-flex justify-content-space-between">
                         <b>Seguro:</b>
                         <div>${{ format_num(form.totalSeguro) }}</div>
                       </div>
                     </f7-list-item>
                     <f7-list-item>
-                      <div
-                        class="width-100 display-flex justify-content-space-between"
-                      >
+                      <div class="width-100 display-flex justify-content-space-between">
                         <b>Cantidad:</b>
                         <div>{{ format_num(form.totalCantidad) }}</div>
                       </div>
                     </f7-list-item>
                     <f7-list-item>
-                      <div
-                        class="width-100 display-flex justify-content-space-between"
-                      >
+                      <div class="width-100 display-flex justify-content-space-between">
                         <b>Valor:</b>
                         <div>${{ format_num(form.totalValor) }}</div>
                       </div>
@@ -204,118 +128,59 @@
               </f7-list-item>
 
               <f7-list-item-row>
-                <f7-row
-                  no-gap
-                  :style="{ width: '100%' }"
-                  class="display-flex justify-content-end"
-                >
+                <f7-row no-gap :style="{ width: '100%' }" class="display-flex justify-content-end">
                   <f7-col width="50">
-                    <f7-list-input
-                      label="Efectivo"
-                      type="text"
-                      outline
-                      floating-label
-                      :disabled="true"
-                      :value="`$${format_num(form.efectivo)}`"
-                    >
+                    <f7-list-input label="Efectivo" type="text" outline floating-label :disabled="true"
+                      :value="`$${format_num(form.efectivo)}`">
                     </f7-list-input>
                   </f7-col>
 
                   <f7-col width="50">
-                    <f7-list-input
-                      label="Redbus"
-                      type="text"
-                      outline
-                      floating-label
-                      :disabled="true"
-                      :value="`$${format_num(form.redBus)}`"
-                    >
+                    <f7-list-input label="Redbus" type="text" outline floating-label :disabled="true"
+                      :value="`$${format_num(form.redBus)}`">
                     </f7-list-input>
                   </f7-col>
                 </f7-row>
               </f7-list-item-row>
 
               <f7-list-item-row>
-                <f7-row
-                  no-gap
-                  :style="{ width: '100%' }"
-                  class="display-flex justify-content-end"
-                >
+                <f7-row no-gap :style="{ width: '100%' }" class="display-flex justify-content-end">
                   <f7-col width="50">
-                    <f7-list-input
-                      label="Pinbus"
-                      type="text"
-                      outline
-                      floating-label
-                      :disabled="true"
-                      :value="`$${format_num(form.pinBus)}`"
-                    >
+                    <f7-list-input label="Pinbus" type="text" outline floating-label :disabled="true"
+                      :value="`$${format_num(form.pinBus)}`">
                     </f7-list-input>
                   </f7-col>
 
                   <f7-col width="50">
-                    <f7-list-input
-                      label="Brasilia"
-                      type="text"
-                      outline
-                      floating-label
-                      :disabled="true"
-                      :value="`$${format_num(form.brasilia)}`"
-                    >
+                    <f7-list-input label="Brasilia" type="text" outline floating-label :disabled="true"
+                      :value="`$${format_num(form.brasilia)}`">
                     </f7-list-input>
                   </f7-col>
                 </f7-row>
               </f7-list-item-row>
 
-              <f7-list-input
-                label="Avance"
-                type="text"
-                outline
-                floating-label
-                :value="format_num(form.avance)"
-                @input="input_mask('avance')"
-              >
+              <f7-list-input label="Gamarra" type="text" outline floating-label :disabled="true"
+                :value="format_num(form.gamarra)">
               </f7-list-input>
 
-              <f7-list-input
-                v-if="false"
-                label="Recaudo"
-                type="text"
-                outline
-                floating-label
-                :value="format_num(form.recaudo)"
-                @input="input_mask('recaudo')"
-              >
+              <f7-list-input label="Avance" type="text" outline floating-label :value="format_num(form.avance)"
+                @input="input_mask('avance')">
               </f7-list-input>
 
-              <f7-list-input
-                v-if="false"
-                label="seguridad Social"
-                type="text"
-                outline
-                floating-label
-                :value="format_num(form.segSocial)"
-                @input="input_mask('segSocial')"
-              >
+              <f7-list-input v-if="false" label="Recaudo" type="text" outline floating-label
+                :value="format_num(form.recaudo)" @input="input_mask('recaudo')">
               </f7-list-input>
 
-              <f7-list-input
-                label="Total a pagar"
-                type="text"
-                outline
-                floating-label
-                :disabled="true"
-                :value="`$${format_num(form.totalPagar)}`"
-              >
+              <f7-list-input v-if="false" label="seguridad Social" type="text" outline floating-label
+                :value="format_num(form.segSocial)" @input="input_mask('segSocial')">
               </f7-list-input>
 
-              <f7-list-input
-                label="Observaciones"
-                type="textarea"
-                floating-label
-                outline
-                v-model:value="form.observaciones"
-              >
+              <f7-list-input label="Total a pagar" type="text" outline floating-label :disabled="true"
+                :value="`$${format_num(form.totalPagar)}`">
+              </f7-list-input>
+
+              <f7-list-input label="Observaciones" type="textarea" floating-label outline
+                v-model:value="form.observaciones">
               </f7-list-input>
               <f7-list-item group-title> Taquilla de despacho: </f7-list-item>
             </f7-list>
@@ -323,9 +188,7 @@
           <f7-card-footer class="width-100 no-padding margin-top">
             <f7-list class="width-100">
               <f7-list-item class="width-100">
-                <f7-button class="width-100" large outline @click="close_book"
-                  >Cerrar libro</f7-button
-                >
+                <f7-button class="width-100" large outline @click="close_book">Cerrar libro</f7-button>
               </f7-list-item>
             </f7-list>
           </f7-card-footer>
@@ -368,7 +231,7 @@ export default {
       }
     );
 
-    const open = async () => {};
+    const open = async () => { };
 
     const closed = () => {
       context.emit("closed", false);
@@ -406,6 +269,7 @@ export default {
       let redBus = 0;
       let pinBus = 0;
       let brasilia = 0;
+      let gamarra = 0;
       let avances = 0;
       let tiquetes = _.cloneDeep(data.filter((e) => e.agencia_tiq));
 
@@ -450,9 +314,10 @@ export default {
           redBus += el.fpago_tiq === "07" ? valor : 0;
           pinBus += el.fpago_tiq === "10" ? valor : 0;
           brasilia += el.fpago_tiq === "09" ? valor : 0;
+          gamarra += el.fpago_tiq === "11" ? valor : 0;
 
           totalCantidad += cantidad;
-          totalValor += valor;
+          totalValor += el.fpago_tiq !== "11" ? valor : 0;
 
           // if (id_agc === "0006") {
           avances = efectivo;
@@ -489,8 +354,9 @@ export default {
         efectivo,
         redBus,
         pinBus,
-        avance: avances,
+        avances,
         brasilia,
+        gamarra,
         totalPagar: totalValor,
         recaudo: 0,
         segSocial: 0,

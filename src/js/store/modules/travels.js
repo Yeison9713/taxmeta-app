@@ -288,6 +288,7 @@ export default {
                 let placa = form.vehiculo;
                 let pinBus = form.pinBus || 0;
                 let brasilia = form.brasilia || 0;
+                let gamarra = form.gamarra || 0;
 
                 let token = state.rootGetters['middleware/get_info']
                 let turno = token.key_point.turn.id_rep;
@@ -321,6 +322,8 @@ export default {
                         turno +
                         "|" +
                         brasilia +
+                        "|" +
+                        gamarra +
                         "|",
                     url: state.rootGetters['setting/get_url']('close_book')
                 }
@@ -352,6 +355,8 @@ export default {
                 for (let name of array_variable) {
                     send_data += `${form[name].trim()}|`
                 }
+
+                send_data += `0|${form.vlrgamarra}|`
 
                 let data = {
                     data: `${send_data}`,

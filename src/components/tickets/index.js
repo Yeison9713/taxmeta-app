@@ -166,6 +166,12 @@ const get_template = (template) => {
                 [1, 2, "Conductor"],
             ],
         },
+        plantilla7: {
+            sillas: [
+                [2, 3, 4],
+                [1, "Conductor"],
+            ],
+        },
 
         plantilla8: {
             sillas: [

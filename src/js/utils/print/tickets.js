@@ -83,6 +83,9 @@ const ticket = async (data) => {
         case "10":
             formapago = "Pin Bus";
             break;
+        case "11":
+            formapago = "Gamarra";
+            break;
     }
 
     return {
@@ -548,14 +551,14 @@ const travel_book = async (data) => {
                             "",
                         ],
                         [
-                            { colSpan: 5, text: "Brasilia", style: "right", fontSize: 8 },
+                            { colSpan: 5, text: "Gamarra", style: "right", fontSize: 8 },
                             "",
                             "",
                             "",
                             "",
                             {
                                 colSpan: 2,
-                                text: "$" + format_num(data.vlrbrasilia_lvia.trim() || 0),
+                                text: "$" + format_num(data.vlrgamarra_lvia.trim() || 0),
                                 fontSize: 8,
                                 alignment: "center",
                             },

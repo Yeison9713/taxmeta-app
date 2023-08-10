@@ -354,7 +354,7 @@ export default {
         efectivo,
         redBus,
         pinBus,
-        avances,
+        avance: avances,
         brasilia,
         gamarra,
         totalPagar: totalValor,

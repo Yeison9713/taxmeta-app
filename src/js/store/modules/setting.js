@@ -12,6 +12,7 @@ export default {
             turns: "Transporte/dlls/CfTurnosJ.dll",
             travels: "Transporte/dlls/PrviajesJ.dll",
             consecutive: "Transporte/dlls/PrconsecutivoJ.dll",
+            consecutiveT: "Transporte/dlls/PrconsecutivoT.dll",
             vehicles: "Transporte/dlls/PrVehiculosJ.dll",
             customers: "Financiero/dlls/Cfrutsj.dll",
             embargoes: "Transporte/dlls/PrembarquesJ.dll",
@@ -55,6 +56,21 @@ export default {
                 let send_data = {
                     data: `${info.session}|${data}`,
                     url: state.rootGetters['setting/get_url']('consecutive'),
+                }
+
+                request_titan({ url: ip_service, data: send_data })
+                    .then(resolve)
+                    .catch(reject)
+            })
+        },
+        get_consecutive_t(state, data = null) {
+            return new Promise((resolve, reject) => {
+                let info = state.rootGetters['middleware/get_info'] || {}
+                let ip_service = state.rootState.setting?.ip_service || ""
+
+                let send_data = {
+                    data: `${info.session}|${data}`,
+                    url: state.rootGetters['setting/get_url']('consecutiveT'),
                 }
 
                 request_titan({ url: ip_service, data: send_data })

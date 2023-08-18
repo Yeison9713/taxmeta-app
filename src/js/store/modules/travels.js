@@ -126,7 +126,7 @@ export default {
             let turn = info?.key_point?.turn?.id_rep;
 
             let {
-                consecutive: { nro_cons },
+                consecutive: { nro },
                 date,
                 vehicle,
                 travel: { id_via, cantpasajeros_via: service },
@@ -151,7 +151,7 @@ export default {
             let data =
                 agencie +
                 "|" +
-                String(nro_cons).trim() +
+                String(nro).trim() +
                 "|" +
                 date.replace(/-/g, "") +
                 "|" +

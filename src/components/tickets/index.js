@@ -52,10 +52,12 @@ const init_store = () => store = useStore();
 
 const dispatch_data = async (id_agencia) => {
     let loader_src = loader(true)
+    const info = store.getters["middleware/get_info"];
+
+    id_agencia = info?.key_point?.ticket_office?.id_agc || ''
 
     loader_src.setTitle(`Actualizando consecutivo...`);
-    const response_iterator = await store.dispatch("setting/get_consecutive", "10|0001|")
-    // const response_iterator = await store.dispatch("setting/get_consecutive", `10|${id_agencia}|`)
+    const response_iterator = await store.dispatch("setting/get_consecutive_t", `${id_agencia}|`)
 
     loader_src.setTitle(`Descargando viajes...`);
     await store.dispatch("travels/query_data");

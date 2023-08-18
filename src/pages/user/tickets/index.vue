@@ -264,11 +264,12 @@
                 outline
                 floating-label
                 :disabled="true"
-                v-model:value="form.consecutive.nro_cons"
+                v-model:value="form.consecutive.nro"
               >
               </f7-list-input>
 
               <f7-list-input
+                v-if="false"
                 label="Fecha"
                 type="text"
                 outline

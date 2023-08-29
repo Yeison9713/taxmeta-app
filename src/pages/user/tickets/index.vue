@@ -488,6 +488,7 @@ export default {
       () => form.travel,
       async (val) => {
         let data = { ...val };
+        // passenger
 
         form.origin = parseFloat(data.codorigen_via) || "";
         form.time_route = data.idhorario_via;
@@ -502,6 +503,12 @@ export default {
         form.service = template?.service || "";
         popup_sillas.value.params.template = template?.template;
         popup_sillas.value.params.id_via = data.id_via;
+
+        let date = data.fecha_via.replaceAll("/", "-")
+
+        let hour = data.horario_via.substr(0, 2)
+        let minutes = data.horario_via.substr(2, 2)
+        form.passenger.time_out = `${date}T${hour}:${minutes}`
 
         if (!data.cantpasajeros_via) {
           let glass = init_form();

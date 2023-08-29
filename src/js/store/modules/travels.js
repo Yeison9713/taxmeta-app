@@ -356,7 +356,9 @@ export default {
                     send_data += `${form[name].trim()}|`
                 }
 
-                send_data += `0|${form.vlrgamarra}|`
+                let vlrgamarra = form.vlrgamarra || 0
+
+                send_data += `0|${vlrgamarra}|`
 
                 let data = {
                     data: `${send_data}`,

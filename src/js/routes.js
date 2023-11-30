@@ -7,6 +7,7 @@ import Tickets from '../pages/user/tickets/index.vue'
 import VehicleLoad from '../pages/user/loads/index.vue'
 import closeBox from '../pages/user/closeBox/index.vue'
 import reportTickets from '../pages/user/tickets/report.vue'
+import reportTravel from '../pages/user/tickets/reportTravel.vue'
 
 import NotFoundPage from '../pages/404.vue';
 
@@ -22,6 +23,7 @@ var routes = [
   securedRoute('/user/vehicle-load/', VehicleLoad),
   securedRoute('/user/close-box/', closeBox),
   securedRoute('/user/report/tickets/', reportTickets),
+  securedRoute('/user/report/travel/', reportTravel),
   {
     path: '(.*)',
     component: NotFoundPage,

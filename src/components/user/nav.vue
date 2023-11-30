@@ -117,6 +117,19 @@
                     />
                   </template>
                 </f7-list-item>
+                <f7-list-item
+                  link="/user/report/travel/"
+                  title="Libro de viajes"
+                  sheet-close=".sheet-menu-list"
+                >
+                  <template #media>
+                    <f7-icon
+                      md="material:bookmark"
+                      aurora="f7:bookmark"
+                      ios="f7:bookmark"
+                    />
+                  </template>
+                </f7-list-item>
               </f7-list>
             </f7-accordion-content>
           </f7-list-item>

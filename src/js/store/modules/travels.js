@@ -403,5 +403,21 @@ export default {
                     .catch(reject)
             })
         },
+
+        get_travels(state, send_data) {
+            return new Promise((resolve, reject) => {
+                let token = state.rootGetters['middleware/get_info']
+                let ip_service = state.rootState.setting?.ip_service || ""
+
+                let data = {
+                    data: `${token.session}|${send_data}`,
+                    url: state.rootGetters['setting/get_url']('report_travel')
+                }
+
+                request_titan({ url: ip_service, data })
+                    .then(resolve)
+                    .catch(reject)
+            })
+        }
     }
 }

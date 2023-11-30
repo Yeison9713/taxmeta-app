@@ -36,7 +36,8 @@ export default {
             save_close_box: "transporte/dlls/PrCuadrev.dll",
             print_close_box: "transporte/dlls/PrCuadre2VJ.dll",
             tickets_r: "Transporte/dlls/RpTiquetes04VJ.dll",
-            cancel_travel: "Transporte/dlls/PrAnulaTiq.dll"
+            cancel_travel: "Transporte/dlls/PrAnulaTiq.dll",
+            report_travel: "Transporte/dlls/RpLViajes03VJ.dll"
         },
     },
 

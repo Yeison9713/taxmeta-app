@@ -164,7 +164,7 @@ export default {
                     toast("Debe selecionar una taquilla");
                 else {
                     loader(true);
-                    let data_send = `${start_date}|${finish_date}|${placa}|${taquilla}|`;
+                    let data_send = `${start_date}|${finish_date}|${taquilla}|${placa}|`;
 
                     let { message } = await store.dispatch(
                         "travels/get_travels",

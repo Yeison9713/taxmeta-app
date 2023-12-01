@@ -546,7 +546,7 @@ export default {
           (parseFloat(amount) || 0 - parseFloat(discount) || 0) *
           parseFloat(quantity || 0);
 
-        if (subtotal < 5000) safe = minimo * parseFloat(quantity || 0);
+        if (subtotal < 5001) safe = minimo * parseFloat(quantity || 0);
         else safe = maximo * parseFloat(quantity || 0);
 
         let total = subtotal - safe;

@@ -257,7 +257,7 @@ export default {
       } catch (error) {
         loader(false);
         console.log("Error consultando travel book: ", error);
-        toast("Error consultando informacion de libro");
+        toast(error?.message[0] ||"Error consultando informacion de libro");
       }
     };
 
@@ -448,7 +448,7 @@ export default {
       } catch (error) {
         loader(false);
         console.log("Ocurrio un error en el guardado", error);
-        toast("Ocurrio un error en el cierre del libro");
+        toast(error?.message[0] || "Ocurrio un error en el cierre del libro");
       }
     };
 

@@ -218,7 +218,7 @@ export default {
         toast("Proceso realizado correctamente!");
       } catch (error) {
         loader(false);
-        toast("Error anulando el registro");
+        toast(error?.message[0] || "Error anulando el registro");
       }
     };
 

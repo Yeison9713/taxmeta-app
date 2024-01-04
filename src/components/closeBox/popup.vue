@@ -388,7 +388,7 @@ export default {
         print_close_box();
       } catch (error) {
         loader(false);
-        toast("Error cerrando caja");
+        toast(error?.message[0] || "Error cerrando caja");
         console.log("Error en el cierre de caja: ", error);
       }
     };
@@ -416,7 +416,7 @@ export default {
           });
       } catch (error) {
         loader(false);
-        toast("Error generando la impresion");
+        toast(error?.message[0] || "Error generando la impresion");
         console.log("Error print cierre de caja: ", error);
       }
     };

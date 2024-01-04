@@ -181,7 +181,7 @@ export default {
             } catch (error) {
                 loader(false);
                 console.log("Error: ", error);
-                toast("Error consultando datos");
+                toast(error?.message[0] || "Error consultando datos");
             }
         };
 

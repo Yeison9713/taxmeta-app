@@ -415,7 +415,7 @@ export default {
       } catch (error) {
         loader(false);
         console.log("Error en el guardado: ", error);
-        toast("Ocurrio un error en el guardado");
+        toast(error?.message[0] || "Ocurrio un error en el guardado");
       }
     };
 

@@ -100,6 +100,7 @@ const template_bus = (tipo_veh) => {
         { id: 12, service: "12. Bus - 42 pasajeros", template: 'plantilla12' },
         { id: 13, service: "13. Bus - 44 pasajeros", template: 'plantilla13' },
         { id: 14, service: "14. Bus - 9 pasajeros", template: 'plantilla14' },
+        { id: 19, service: "19. Microbus - 15 pasajeros", template: "plantilla19" }
     ]
 
     return data.find(e => e.id == tipo_veh) || {}
@@ -272,6 +273,16 @@ const get_template = (template) => {
                 [8, 9, 4],
                 ["Puerta", 3, 2],
                 [1, "Conductor"],
+            ],
+        },
+        plantilla19: {
+            sillas: [
+                [17, 16, 15, 14],
+                [13, 19, 12, 11],
+                [10, false, 9, 8],
+                [7, false, 6, 5],
+                ["Puerta", 18, 4, 3],
+                [1, 2, "Conductor"],
             ],
         },
         plantilla33: {
